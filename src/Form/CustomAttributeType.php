@@ -3,11 +3,11 @@
 namespace App\Form;
 
 use App\Entity\CustomItemAttribute;
-use App\Entity\ItemCollection;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Enum\CustomAttributeType as CustomAttributeTypeEnum;
 
 class CustomAttributeType extends AbstractType
 {
@@ -15,7 +15,9 @@ class CustomAttributeType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('type')
+            ->add('type', EnumType::class, [
+                'class' => CustomAttributeTypeEnum::class
+            ])
         ;
     }
 
