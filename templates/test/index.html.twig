@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ action }} collection {% endblock %}
+
+{% block body %}
+    <h1>{{ action|capitalize }} collection</h1>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.category) }}
+
+    <label>Custom attributes</label>
+    <div
+        id="custom-attributes-wrapper"
+        data-index="{{ form.customItemAttributes|length > 0 ? form.customItemAttributes|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.customItemAttributes.vars.prototype)|e('html_attr') }}"
+    >
+        {% for customAttribute in form.cistomItemAttributes %}
+            <div class="item">
+                {{ form_row(customAttribute) }}
+            </div>
+        {% endfor %}
+    </div>
+    <a id="add-custom-attribute" href="#">Add Atribute</a>
+
+    {{ form_rest(form) }}
+    <button type="submit">{{ action|capitalize }}</button>
+    {{ form_end(form) }}
+{% endblock %}
