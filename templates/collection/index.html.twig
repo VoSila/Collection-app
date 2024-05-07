@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Collections{% endblock %}
+
+{% block body %}
+
+    <h1>Collections</h1>
+
+{#    {{ dump(collections) }}#}
+
+{#    {% for collection in collections %}#}
+        <p>{{ collections.name }} - {{ collections.description }}</p>
+{#    {% endfor %}#}
+
+{% endblock %}

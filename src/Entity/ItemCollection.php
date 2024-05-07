@@ -28,6 +28,11 @@ class ItemCollection
     #[Assert\Valid()]
     private ?CollectionCategory $category = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\Valid()]
+    private ?User $user = null;
+
     /**
      * @var Collection<int, CustomItemAttribute>
      */
@@ -76,6 +81,18 @@ class ItemCollection
     public function setCategory(?CollectionCategory $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
