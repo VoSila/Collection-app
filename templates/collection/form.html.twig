@@ -9,6 +9,7 @@
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}
     {{ form_row(form.category) }}
+    {{ dump(form) }}
 
     <label>Custom attributes</label>
     <div
@@ -27,4 +28,6 @@
     {{ form_rest(form) }}
     <button type="submit">{{ action|capitalize }}</button>
     {{ form_end(form) }}
+
+    <script type="application/javascript" src="{{ asset('js/collection-form-helper.js') }}"></script>
 {% endblock %}

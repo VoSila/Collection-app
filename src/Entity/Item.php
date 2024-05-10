@@ -3,10 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item
@@ -20,12 +19,19 @@ class Item
     #[ORM\JoinColumn(nullable: false)]
     private ?ItemCollection $itemCollection = null;
 
-    #[ORM\OneToOne(targetEntity: CustomItemAttribute::class)]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?CustomItemAttribute $customItemAttribute = null;
-
     #[ORM\Column(length: 100)]
     private ?string $name = null;
+
+    /**
+     * @var Collection<int, CustomItemAttributeValue>
+     */
+    #[ORM\OneToMany(targetEntity: CustomItemAttributeValue::class, mappedBy: 'item', cascade: ["persist"], orphanRemoval: true)]
+    private Collection $customItemAttributeValues;
+
+    public function __construct()
+    {
+        $this->customItemAttributeValues = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -43,17 +49,6 @@ class Item
         return $this;
     }
 
-    public function getCustomItemAttribute(): ?CustomItemAttribute
-    {
-        return $this->customItemAttribute;
-    }
-
-    public function setCustomItemAttribute(?CustomItemAttribute $customItemAttribute): static
-    {
-        $this->customItemAttribute = $customItemAttribute;
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -62,6 +57,36 @@ class Item
     public function setName(string $name): static
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CustomItemAttributeValue>
+     */
+    public function getCustomItemAttributeValues(): Collection
+    {
+        return $this->customItemAttributeValues;
+    }
+
+    public function addCustomItemAttributeValue(CustomItemAttributeValue $customItemAttributeValue): static
+    {
+        if (!$this->customItemAttributeValues->contains($customItemAttributeValue)) {
+            $this->customItemAttributeValues->add($customItemAttributeValue);
+            $customItemAttributeValue->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomItemAttributeValue(CustomItemAttributeValue $customItemAttributeValue): static
+    {
+        if ($this->customItemAttributeValues->removeElement($customItemAttributeValue)) {
+            // set the owning side to null (unless already changed)
+            if ($customItemAttributeValue->getItem() === $this) {
+                $customItemAttributeValue->setItem(null);
+            }
+        }
+
         return $this;
     }
 }

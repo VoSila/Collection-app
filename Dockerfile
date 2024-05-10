@@ -7,29 +7,6 @@ FROM dunglas/frankenphp:1-php8.3 AS frankenphp_upstream
 # https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
 # https://docs.docker.com/compose/compose-file/#target
 
-# Используем образ MySQL 8.0
-FROM mysql:8.0
-
-# Устанавливаем переменные окружения
-ENV MYSQL_HOST=mysql
-ENV MYSQL_DATABASE=itransition
-ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_USER=dev
-ENV MYSQL_PASSWORD=dev
-
-# Копируем конфигурационный файл my.cnf
-COPY ./docker/mysql/my.cnf /etc/mysql/my.cnf
-
-# Определяем точки монтирования
-VOLUME /var/lib/mysql
-
-# Определяем порты
-EXPOSE 3306
-
-# Команда для запуска MySQL сервера
-CMD ["mysqld"]
-
-
 # Base FrankenPHP image
 FROM frankenphp_upstream AS frankenphp_base
 

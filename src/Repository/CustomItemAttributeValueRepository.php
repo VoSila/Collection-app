@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\CustomItemValue;
+use App\Entity\CustomItemAttributeValue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<CustomItemValue>
+ * @extends ServiceEntityRepository<CustomItemAttributeValue>
  */
-class CustomItemValueRepository extends ServiceEntityRepository
+class CustomItemAttributeValueRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CustomItemValue::class);
+        parent::__construct($registry, CustomItemAttributeValue::class);
     }
 
     //    /**
-    //     * @return CustomItemValue[] Returns an array of CustomItemValue objects
+    //     * @return CustomItemAttributeValue[] Returns an array of CustomItemAttributeValue objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class CustomItemValueRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?CustomItemValue
+    //    public function findOneBySomeField($value): ?CustomItemAttributeValue
     //    {
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')

@@ -49,7 +49,7 @@ class CollectionController extends AbstractController
 
         return $this->render('collection/form.html.twig', [
             'action' => 'create',
-            'form' => $form
+            'form' => $form->createView()
         ]);
     }
 

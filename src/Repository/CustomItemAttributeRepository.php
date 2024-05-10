@@ -15,29 +15,13 @@ class CustomItemAttributeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CustomItemAttribute::class);
     }
-
-    //    /**
-    //     * @return CustomItemAttribute[] Returns an array of CustomItemAttribute objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('i.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?CustomItemAttribute
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findByCollectionId($collectionId)
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.itemCollection', 'ic')
+            ->andWhere('ic.id = :collectionId')
+            ->setParameter('collectionId', $collectionId)
+            ->getQuery()
+            ->getResult();
+    }
 }
