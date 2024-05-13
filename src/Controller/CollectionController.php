@@ -38,9 +38,12 @@ class CollectionController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $collection->setUser($user);
-            $this->entityManager->persist($collection);
-            $this->entityManager->flush();
+
+            dd($form);
+
+//            $collection->setUser($user);
+//            $this->entityManager->persist($collection);
+//            $this->entityManager->flush();
 
             $this->addFlash('success', 'Collection successfully created');
 

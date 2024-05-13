@@ -15,10 +15,6 @@ class Item
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: ItemCollection::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?ItemCollection $itemCollection = null;
-
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
@@ -27,6 +23,11 @@ class Item
      */
     #[ORM\OneToMany(targetEntity: CustomItemAttributeValue::class, mappedBy: 'item', cascade: ["persist"], orphanRemoval: true)]
     private Collection $customItemAttributeValues;
+
+    #[ORM\ManyToOne(targetEntity: ItemCollection::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ItemCollection $itemCollection = null;
+
 
     public function __construct()
     {

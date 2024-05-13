@@ -6,22 +6,15 @@
 
     <h1>{{ action|capitalize }} item</h1>
 
-    {{ dump(form.customItemAttributeValues) }}
+{#    {{ dump(form.customItemAttributeValues) }}#}
 
     {{ form_start(form) }}
-    <div class="form-group">
-        {{ form_label(form.name) }}
-        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
 
-        {% for customItemAttributeValueForm in form.customItemAttributeValues %}
-
-            {{ form_row(customItemAttributeValueForm.value) }}
-
-        {% endfor %}
-
-        {{ form_errors(form.name) }}
-    </div>
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
 
     <button type="submit" class="btn btn-primary">{{ action|capitalize }}</button>
     {{ form_end(form) }}
+    <script type="application/javascript" src="{{ asset('js/collection-form-helper.js') }}"></script>
+
 {% endblock %}

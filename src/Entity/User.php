@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use App\Enum\UserStatus;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -26,6 +28,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private array $roles = [];
+
+    #[ORM\Column(type: 'smallint', enumType: UserStatus::class)]
+    #[Assert\NotNull()]
+    #[Assert\Type(type: UserStatus::class)]
+    private ?UserStatus $status = null;
 
     /**
      * @var string The hashed password
@@ -95,6 +102,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getStatus(): ?UserStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?UserStatus $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

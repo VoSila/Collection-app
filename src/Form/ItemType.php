@@ -4,26 +4,19 @@ namespace App\Form;
 
 use App\Entity\Item;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType as BaseCollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType as BaseCollectionType;
+
 
 class ItemType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        dd($options['customItemAttribute']);
         $builder
-            ->add('name', TextType::class)
+            ->add('name')
             ->add('customItemAttributeValues', BaseCollectionType::class, [
                 'entry_type' => CustomAttributeValueType::class,
-                'entry_options' => [
-                    'customItemAttribute' => $options['customItemAttribute'],
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false
             ]);
     }
 
@@ -31,7 +24,6 @@ class ItemType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Item::class,
-            'customItemAttribute' => null,
         ]);
     }
 }
