@@ -19,10 +19,10 @@ class CollectionController extends AbstractController
     ){
     }
 
-    #[Route('/collections', name: 'app_collection')]
+    #[Route('/collections/{id}', name: 'app_collection')]
     public function index(EntityManagerInterface $entityManager, int $id): Response
     {
-        $collections = $entityManager->getRepository(ItemCollection::class)->find($id);
+        $collections = $entityManager->getRepository(ItemCollection::class)->findBy(['user' => $id]);
 
         return $this->render('collection/index.html.twig', [
             'collections' => $collections,
@@ -62,11 +62,11 @@ class CollectionController extends AbstractController
         $form = $this->createForm(CollectionType::class, $collection);
         $form->handleRequest($request);
 
-        $currentUser = $this->getUser();
+//        $currentUser = $this->getUser();
 
-        if ($collection->getUser() !== $currentUser) {
-            throw $this->createAccessDeniedException('You are not allowed to access this collection.');
-        }
+//        if ($collection->getUser() !== $currentUser) {
+//            throw $this->createAccessDeniedException('You are not allowed to access this collection.');
+//        }
 
         if($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
@@ -76,7 +76,7 @@ class CollectionController extends AbstractController
 
         return $this->render('collection/form.html.twig', [
             'action' => 'update',
-            'form' => $form,
+            'form' => $form->createView(),
             'collection' => $collection
         ]);
     }

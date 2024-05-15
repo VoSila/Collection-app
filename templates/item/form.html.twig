@@ -3,18 +3,27 @@
 {% block title %}{{ action }} Item{% endblock %}
 
 {% block body %}
+    <div>
+        <h1>{{ action|capitalize }} item</h1>
 
-    <h1>{{ action|capitalize }} item</h1>
+            {{ dump(form.customItemAttributeValues) }}
 
-{#    {{ dump(form.customItemAttributeValues) }}#}
+        {{ form_start(form, {'attr': {'class': 'p-5 bg-light'}}) }}
 
-    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
 
-    {{ form_label(form.name) }}
-    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        <div class="form-group">
+            {% for attributeForm in form.customItemAttributeValues %}
+                {{ form_row(attributeForm) }}
+            {% endfor %}
+        </div>
 
-    <button type="submit" class="btn btn-primary">{{ action|capitalize }}</button>
-    {{ form_end(form) }}
-    <script type="application/javascript" src="{{ asset('js/collection-form-helper.js') }}"></script>
+        <button type="submit" class="btn btn-primary">{{ action|capitalize }}</button>
+        {{ form_end(form) }}
+
+    </div>
 
 {% endblock %}

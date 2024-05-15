@@ -29,10 +29,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column(type: 'smallint', enumType: UserStatus::class)]
-    #[Assert\NotNull()]
-    #[Assert\Type(type: UserStatus::class)]
-    private ?UserStatus $status = null;
+//    #[ORM\Column(type: 'smallint', enumType: UserStatus::class)]
+//    #[Assert\NotNull()]
+//    #[Assert\Type(type: UserStatus::class)]
+//    private ?UserStatus $status = null;
 
     /**
      * @var string The hashed password
@@ -106,17 +106,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getStatus(): ?UserStatus
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?UserStatus $status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
+//    public function getStatus(): ?UserStatus
+//    {
+//        return $this->status;
+//    }
+//
+//    public function setStatus(?UserStatus $status): static
+//    {
+//        $this->status = $status;
+//
+//        return $this;
+//    }
 
     /**
      * @see UserInterface

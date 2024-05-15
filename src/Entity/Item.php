@@ -6,6 +6,7 @@ use App\Repository\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item
@@ -28,7 +29,11 @@ class Item
     #[ORM\JoinColumn(nullable: false)]
     private ?ItemCollection $itemCollection = null;
 
-
+    #[ORM\JoinTable(name: 'tags_to_item')]
+    #[ORM\JoinColumn(name: 'item_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'tag_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Tag', cascade: ['persist'])]
+    private ArrayCollection|PersistentCollection $tags;
     public function __construct()
     {
         $this->customItemAttributeValues = new ArrayCollection();
@@ -89,5 +94,22 @@ class Item
         }
 
         return $this;
+    }
+
+    public function getTags(): ArrayCollection|PersistentCollection
+    {
+        return $this->tags;
+    }
+
+    public function setTags(ArrayCollection $tags): static
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    public function addTag(Tag $tag): void
+    {
+        $this->tags[] = $tag;
     }
 }
