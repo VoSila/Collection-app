@@ -10,26 +10,36 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
+#[Route('/collections')]
 class CollectionController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly Security $security
-    ){
-    }
-
-    #[Route('/collections/{id}', name: 'app_collection')]
-    public function index(EntityManagerInterface $entityManager, int $id): Response
+        private readonly Security               $security
+    )
     {
-        $collections = $entityManager->getRepository(ItemCollection::class)->findBy(['user' => $id]);
-
-        return $this->render('collection/index.html.twig', [
-            'collections' => $collections,
-        ]);
     }
 
-    #[Route('/collections/create', name: 'app_collection_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    #[Route('/', name: 'app_collection')]
+    public function index(EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        if ($user instanceof UserInterface) {
+            $userId = $user->getId();
+            $collections = $entityManager->getRepository(ItemCollection::class)->findBy(['user' => $userId]);
+
+            return $this->render('collection/index.html.twig', [
+                'collections' => $collections,
+            ]);
+        } else {
+            dd('User Not Authorize');
+        }
+    }
+
+    #[Route('/create', name: 'app_collection_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function create(Request $request): Response
     {
         $user = $this->security->getUser();
@@ -37,13 +47,13 @@ class CollectionController extends AbstractController
         $form = $this->createForm(CollectionType::class, $collection);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            dd($form);
+//            dd($form);
 
-//            $collection->setUser($user);
-//            $this->entityManager->persist($collection);
-//            $this->entityManager->flush();
+            $collection->setUser($user);
+            $this->entityManager->persist($collection);
+            $this->entityManager->flush();
 
             $this->addFlash('success', 'Collection successfully created');
 
@@ -56,10 +66,11 @@ class CollectionController extends AbstractController
         ]);
     }
 
-    #[Route('/collections/{id}/update', name: 'app_collection_update', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    #[Route('/{id}/update', name: 'app_collection_update', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function update(Request $request, ItemCollection $collection): Response
     {
         $form = $this->createForm(CollectionType::class, $collection);
+
         $form->handleRequest($request);
 
 //        $currentUser = $this->getUser();
@@ -68,7 +79,7 @@ class CollectionController extends AbstractController
 //            throw $this->createAccessDeniedException('You are not allowed to access this collection.');
 //        }
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
 
             $this->addFlash('success', 'Collection successfully updated');

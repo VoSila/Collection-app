@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ItemCollectionRepository;
+use App\Validator\CollectionCustomAttribute;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -28,6 +29,9 @@ class ItemCollection
     #[Assert\Valid()]
     private ?CollectionCategory $category = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagePath = null;
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Valid()]
@@ -37,6 +41,8 @@ class ItemCollection
      * @var Collection<int, CustomItemAttribute>
      */
     #[ORM\OneToMany(targetEntity: CustomItemAttribute::class, mappedBy: 'itemCollection', cascade: ["persist"], orphanRemoval: true)]
+    #[Assert\Valid()]
+    #[CollectionCustomAttribute()]
     private Collection $customItemAttributes;
 
     public function __construct()
@@ -84,6 +90,19 @@ class ItemCollection
 
         return $this;
     }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath(?string $imagePath): static
+    {
+        $this->imagePath = $imagePath;
+
+        return $this;
+    }
+
 
     public function getUser(): ?User
     {

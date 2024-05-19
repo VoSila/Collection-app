@@ -34,6 +34,7 @@ class Item
     #[ORM\InverseJoinColumn(name: 'tag_id', referencedColumnName: 'id')]
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Tag', cascade: ['persist'])]
     private ArrayCollection|PersistentCollection $tags;
+
     public function __construct()
     {
         $this->customItemAttributeValues = new ArrayCollection();

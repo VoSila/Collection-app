@@ -4,7 +4,7 @@ namespace App\Enum;
 
 enum CustomAttributeType: string
 {
-    case Integer = 'INT';
+    case Integer = 'INTEGER';
     case String = 'STRING';
     case Text = 'TEXT';
     case Boolean = 'BOOL';

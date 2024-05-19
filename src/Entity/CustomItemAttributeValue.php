@@ -13,8 +13,8 @@ class CustomItemAttributeValue
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $value = null;
+    #[ORM\Column(type: 'json')]
+    private mixed $value = null;
 
     #[ORM\ManyToOne(targetEntity: Item::class)]
     #[ORM\JoinColumn(name: 'item_id', referencedColumnName: 'id')]
@@ -29,12 +29,12 @@ class CustomItemAttributeValue
         return $this->id;
     }
 
-    public function getValue(): ?string
+    public function getValue(): mixed
     {
         return $this->value;
     }
 
-    public function setValue(string $value): static
+    public function setValue(mixed $value): static
     {
         $this->value = $value;
 

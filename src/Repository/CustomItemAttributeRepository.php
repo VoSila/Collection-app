@@ -15,13 +15,12 @@ class CustomItemAttributeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CustomItemAttribute::class);
     }
-    public function findByCollectionId($collectionId)
+    public function findBySomeCriteria($name)
     {
-        return $this->createQueryBuilder('c')
-            ->join('c.itemCollection', 'ic')
-            ->andWhere('ic.id = :collectionId')
-            ->setParameter('collectionId', $collectionId)
+        return $this->createQueryBuilder('cia')
+            ->andWhere('cia.name = :name')
+            ->setParameter('name', $name)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 }

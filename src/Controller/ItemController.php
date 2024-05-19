@@ -10,6 +10,7 @@ use App\Form\ItemType;
 use App\Repository\ItemCollectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -32,35 +33,30 @@ class ItemController extends AbstractController
     #[Route('/create', name: 'app_item_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function create(Request $request, EntityManagerInterface $entityManager, ItemCollectionRepository $itemCollectionRepository): Response
     {
-        $collectionId = 2;
+        $collectionId = 1;
 
         $collection = $itemCollectionRepository->getItemCollectionWithCustomAttributes($collectionId, $entityManager);
 
         $item = new Item();
-
-        $customAttributeNames = [];
-
-        foreach ($collection->getCustomItemAttributes() as $customAttribute) {
-            $customAttributeValue = new CustomItemAttributeValue();
-            $customAttributeValue->setCustomItemAttribute($customAttribute);
-            $item->addCustomItemAttributeValue($customAttributeValue);
-            $customAttributeNames[] = $customAttribute->getName();
-        }
+        $customAttributes = $collection->getCustomItemAttributes();
 
         $item->setItemCollection($collection);
 
         $form = $this->createForm(ItemType::class, $item, [
-            'customAttributeNames' => $customAttributeNames,
+            'customAttributes' => $customAttributes,
         ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $this->entityManager->persist($item);
-            $this->entityManager->flush();
+            $entityManager->persist($item);
+            $entityManager->flush();
 
             $this->addFlash('success', 'Item successfully created');
+
+            $url = $request->getUriForPath("/items");
+
+            return new RedirectResponse($url);
 
         }
 
@@ -70,7 +66,7 @@ class ItemController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/update', name: 'app_collection_update', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    #[Route('/{id}/update', name: 'app_item_update', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function update(Request $request, Item $item): Response
     {
         $form = $this->createForm(ItemType::class, $item);

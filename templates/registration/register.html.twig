@@ -14,9 +14,7 @@
                 {% endfor %}
                 <form class="form-horizontal" action="{{ path('app_register') }}" method="post" autocomplete="off">
                     {{ form_start(registrationForm) }}
-{#                    <div class="form-group">#}
-{#                        {{ form_row(registrationForm.name, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}#}
-{#                    </div>#}
+                    {{ form_row(registrationForm._token) }}
                     <div class="form-group">
                         {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
                     </div>

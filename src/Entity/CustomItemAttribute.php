@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enum\CustomAttributeType;
 use App\Repository\CustomItemAttributeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CustomItemAttributeRepository::class)]
@@ -61,5 +63,4 @@ class CustomItemAttribute
         $this->itemCollection = $itemCollection;
         return $this;
     }
-
 }

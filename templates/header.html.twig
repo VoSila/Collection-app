@@ -14,9 +14,9 @@
                         </form>
 
                         <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                            <li class="active"><a href="index.html">Home</a></li>
-                            <li><a href="category.html">Collections</a></li>
-                            <li><a href="category.html">Items</a></li>
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="{{ path('app_collection') }}">Collections</a></li>
+                            <li><a href="{{ path('app_item') }}">Items</a></li>
                             <li><a href="{{ path('app_login') }}">Sign In</a></li>
                             {% if app.user %}
                                 <li><a href="{{ path('app_logout') }}">Sign Out</a></li>

@@ -6,11 +6,9 @@ use App\Entity\Tag;
 use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Attribute;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
-class TagTransformer implements DataTransformerInterface
+readonly class TagTransformer implements DataTransformerInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -49,6 +47,7 @@ class TagTransformer implements DataTransformerInterface
             $tag = $this->tagRepository->findOneBy(['name' => $item]);
             if (!$tag) {
                 $tag = (new Tag())->setName($item);
+                $this->entityManager->persist($tag);
             }
 
             $value->add($tag);
