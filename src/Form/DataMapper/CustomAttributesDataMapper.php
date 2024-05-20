@@ -33,10 +33,19 @@ final readonly class CustomAttributesDataMapper implements DataMapperInterface
             $forms['name']->setData($viewData->getName());
         }
 
+        if (isset($forms['tags'])) {
+            $forms['tags']->setData($viewData->getTags());
+        }
+
         foreach ($viewData->getCustomItemAttributeValues() as $attribute) {
-            $formName = $attribute->getAttribute()->getName();
-            if (isset($forms[$formName])) {
-                $forms[$formName]->setData($attribute->getValue());
+            $formName = $attribute->getCustomItemAttribute()->getName();
+            $value = $attribute->getValue();
+
+            if (is_array($value) && isset($value['date'])) {
+                $date = new \DateTimeImmutable($value['date']);
+                $forms[$formName]->setData($date);
+            } else {
+                $forms[$formName]->setData($value);
             }
         }
     }
@@ -60,25 +69,31 @@ final readonly class CustomAttributesDataMapper implements DataMapperInterface
 
         foreach ($forms as $name => $form) {
             if ($name !== 'name' && $name != 'tags') {
-                // Создание нового объекта CustomItemAttributeValue
-                $customItemAttributeValue = new CustomItemAttributeValue();
-                // Установка значения атрибута из формы
-                $customItemAttributeValue->setValue($form->getData());
+                $existingAttribute = null;
+                foreach ($viewData->getCustomItemAttributeValues() as $attribute) {
+                    if ($attribute->getCustomItemAttribute()->getName() === $name) {
+                        $existingAttribute = $attribute;
+                        break;
+                    }
+                }
 
-                // Получение уже существующего объекта CustomItemAttribute по вашим требованиям
-                // Например, вы можете использовать ваш репозиторий для поиска нужного объекта
-                $customItemAttribute = $this->customItemAttributeRepository->findBySomeCriteria($name);
+                if ($existingAttribute) {
+                    $existingAttribute->setValue($form->getData());
+                } else {
+                    $customItemAttributeValue = new CustomItemAttributeValue();
+                    $customItemAttributeValue->setValue($form->getData());
 
-                // Устанавливаем связь с существующим объектом CustomItemAttribute
-                $customItemAttributeValue->setCustomItemAttribute($customItemAttribute);
+                    $customItemAttribute = $this->customItemAttributeRepository->findBySomeCriteria($name);
 
-                // Добавляем кастомное значение атрибута к объекту Item
-                $viewData->addCustomItemAttributeValue($customItemAttributeValue);
+                    $customItemAttributeValue->setCustomItemAttribute($customItemAttribute);
 
-                // Сохранение объекта CustomItemAttributeValue
-                $this->entityManager->persist($customItemAttributeValue);
+                    $customItemAttributeValue->setItem($viewData);
+
+                    $viewData->addCustomItemAttributeValue($customItemAttributeValue);
+
+                    $this->entityManager->persist($customItemAttributeValue);
+                }
             }
         }
-
     }
 }

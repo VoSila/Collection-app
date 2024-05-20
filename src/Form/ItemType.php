@@ -7,9 +7,10 @@ use App\Entity\Item;
 use App\Form\DataMapper\CustomAttributesDataMapper;
 use App\Form\DataTransformer\TagTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,6 +43,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
                         'required' => false
                     ]);
                     break;
+                case 'TEXT':
+                    $builder->add($attributeName, TextareaType::class, [
+                        'label' => $attributeName,
+                        'required' => false
+                    ]);
+                    break;
+                case 'BOOL':
+                    $builder->add($attributeName, CheckboxType::class, [
+                        'label' => $attributeName,
+                        'required' => false
+                    ]);
+                    break;
                 case 'DATE':
                     $builder->add($attributeName, DateType::class, [
                         'label' => $attributeName,
@@ -58,9 +71,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
         }
 
         $builder->add('tags', TextType::class, [
-        'label' => 'Tags',
-        'required' => false
-    ]);
+            'required' => false,
+            'autocomplete' => true,
+            'tom_select_options' => [
+                'create' => true,
+                'createOnBlur' => true,
+                'delimiter' => ',',
+            ],
+            'autocomplete_url' => '/autocomplete/tags',
+        ]);
 
         $builder->get('tags')
             ->addModelTransformer($this->tagTransformer);
@@ -73,6 +92,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
         $resolver->setDefaults([
             'data_class' => Item::class,
             'customAttributes' => [],
+            'tags' => null,
         ]);
     }
 }

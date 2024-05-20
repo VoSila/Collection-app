@@ -16,7 +16,7 @@ class CustomItemAttributeValue
     #[ORM\Column(type: 'json')]
     private mixed $value = null;
 
-    #[ORM\ManyToOne(targetEntity: Item::class)]
+    #[ORM\ManyToOne(targetEntity: Item::class, inversedBy: 'customItemAttributeValues')]
     #[ORM\JoinColumn(name: 'item_id', referencedColumnName: 'id')]
     private ?Item $item = null;
 

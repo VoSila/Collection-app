@@ -1,0 +1,3 @@
+ux_autocomplete_tags:
+    controller: App\Controller\ItemController::getTags
+    path: '/autocomplete/tags'

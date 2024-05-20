@@ -48,7 +48,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $userId = $user->getId();
 
-        $url = $request->getUriForPath("/collections/$userId");
+        $url = $request->getUriForPath("/collections");
 
         return new RedirectResponse($url);
     }

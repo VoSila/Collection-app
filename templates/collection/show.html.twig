@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Collections{% endblock %}
+{% block title %}{{ collection.name }} Collection{% endblock %}
 
 {% block body %}
 
     <div class="container" style="margin-top: 50px;">
+        <div class="row">
+            <h1>{{ collection.name }} - Collection</h1>
+        </div>
+
         <div class="col-auto d-flex justify-content-between">
-            <a id="block_button_create" href="{{ path('app_collection_create') }}" type="button" class="btn btn-outline-success" style="margin: 10px 0 10px 0">
-                Create new collection
+            <a id="block_button_create" href="{{ path('app_item_create', {'id': collection.id}) }}" type="button" class="btn btn-outline-success" style="margin: 10px 0 10px 0">
+                Create new item
             </a>
             <button id="block_button_delete" type="button" class="btn btn-outline-danger" style="margin: 10px 15px 10px 0" data-action="Delete">
                 Delete
@@ -24,25 +28,25 @@
                                    type="checkbox" data-indeterminate="false" aria-label="Select all rows"></th>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>Category</th>
-                        <th>Description</th>
+                        <th>Data create</th>
+
                     </tr>
                     </thead>
                     <tbody>
-                    {% for collection in collections %}
+                    {% for item in items %}
                         <tr>
                             <td><input class="PrivateSwitchBase-input css-1m9pwf3" tabindex="-1" type="checkbox"
                                        data-indeterminate="false" aria-label="Select all rows"
-                                       data-collection-id="{{ collection.id }}"></td>
-                            <td>{{ collection.id }}</td>
-                            <td>{{ collection.name }}</td>
-                            <td>{{ collection.category.name }}</td>
-                            <td>{{ collection.description }}</td>
+                                       data-collection-id="{{ item.id }}"></td>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>TEST DATE</td>
+
                             <td>
-                                <a href="{{ path('app_collection_show', {'id': collection.id}) }}" type="button" class="btn btn-outline-primary d-inline-flex align-items-center justify-content-center p-0" style="width: 50px; height: 20px; text-decoration: none; overflow: hidden;">
+                                <a href="{{ path('app_item', {'id': item.id}) }}" type="button" class="btn btn-outline-primary d-inline-flex align-items-center justify-content-center p-0" style="width: 50px; height: 20px; text-decoration: none; overflow: hidden;">
                                     Show
                                 </a>
-                                <a href="{{ path('app_collection_edit', {'id': collection.id}) }}" type="button" class="btn btn-outline-secondary d-inline-flex align-items-center justify-content-center p-0" style="width: 50px; height: 20px; text-decoration: none; overflow: hidden;">
+                                <a href="{{ path('app_item_edit', {'id': item.id}) }}" type="button" class="btn btn-outline-secondary d-inline-flex align-items-center justify-content-center p-0" style="width: 50px; height: 20px; text-decoration: none; overflow: hidden;">
                                     Edit
                                 </a>
                             </td>
@@ -57,8 +61,7 @@
             </div>
         </div>
     </div>
-{#    <script src="{{ asset('js/table.js') }}"></script>#}
+    {#    <script src="{{ asset('js/table.js') }}"></script> #}
     <script src="{{ asset('js/listeners.js') }}"></script>
-
 
 {% endblock %}

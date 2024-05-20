@@ -38,6 +38,7 @@ class Item
     public function __construct()
     {
         $this->customItemAttributeValues = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int

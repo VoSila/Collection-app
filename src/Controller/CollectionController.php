@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\CustomItemAttribute;
+use App\Entity\CustomItemAttributeValue;
+use App\Entity\Item;
 use App\Entity\ItemCollection;
 use App\Form\CollectionType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,6 +42,26 @@ class CollectionController extends AbstractController
         }
     }
 
+    #[Route('/{id}/show', name: 'app_collection_show')]
+    public function show(EntityManagerInterface $entityManager, Security $security, Request $request, $id): Response
+    {
+        $user = $security->getUser();
+        if ($user instanceof UserInterface) {
+
+            $collection = $entityManager->getRepository(ItemCollection::class)->find($id);
+            $items = $entityManager->getRepository(Item::class)->findBy(['itemCollection' => $id]);
+            $customItems = $entityManager->getRepository(CustomItemAttribute::class)->findBy(['itemCollection' => $id]);
+
+            return $this->render('collection/show.html.twig', [
+                'collection' => $collection,
+                'items' => $items,
+                'customItems' => $customItems,
+            ]);
+        } else {
+            dd('User Not Authorize');
+        }
+    }
+
     #[Route('/create', name: 'app_collection_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function create(Request $request): Response
     {
@@ -66,8 +89,8 @@ class CollectionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/update', name: 'app_collection_update', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function update(Request $request, ItemCollection $collection): Response
+    #[Route('/{id}/edit', name: 'app_collection_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    public function edit(Request $request, ItemCollection $collection): Response
     {
         $form = $this->createForm(CollectionType::class, $collection);
 
@@ -86,7 +109,7 @@ class CollectionController extends AbstractController
         }
 
         return $this->render('collection/form.html.twig', [
-            'action' => 'update',
+            'action' => 'edit',
             'form' => $form->createView(),
             'collection' => $collection
         ]);
