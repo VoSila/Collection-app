@@ -26,4 +26,29 @@ class ItemRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+
+
+    public function findLastFiveWithEagerLoading()
+    {
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.customItemAttributeValues', 'cav')
+            ->addSelect('cav')
+            ->orderBy('i.createdAt', 'DESC')
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findTopFiveLargestItemCollectionIds()
+    {
+        return $this->createQueryBuilder('i')
+            ->select('IDENTITY(i.itemCollection) as itemCollectionId, COUNT(i.id) as itemCount')
+            ->groupBy('i.itemCollection')
+            ->orderBy('itemCount', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

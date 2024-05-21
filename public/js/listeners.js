@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var csrfTokenInput = document.createElement('input');
         csrfTokenInput.type = 'hidden';
         csrfTokenInput.name = '_token';
-        csrfTokenInput.value =  '{{ csrf_token( ~ 9) }}';
+        csrfTokenInput.value =  '{{ csrf_token(delete ~ ) }}';
 
         form.appendChild(csrfTokenInput);
 

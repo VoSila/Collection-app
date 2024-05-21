@@ -3,10 +3,8 @@
 {% block title %}Collections{% endblock %}
 
 {% block body %}
-
     <div class="col-auto d-flex justify-content-between">
         {% include 'sidebar.html.twig' %}
-
         <div class="container" style="margin-top: 50px;">
             <div class="col-auto d-flex justify-content-between">
                 <a id="block_button_create" href="{{ path('app_collection_create') }}" type="button"
@@ -28,10 +26,58 @@
                                        tabindex="-1"
                                        type="checkbox" data-indeterminate="false" aria-label="Select all rows">
                             </th>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Description</th>
+                            {% set sort = app.request.get('sort', '') %}
+                            {% set direction = app.request.get('direction', '') %}
+                            <th>
+                                {% set params = queryParams|merge({ sort: 'id', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}
+                                {% if sort == 'id' %}
+                                    {% if direction == 'ASC' %}
+                                        <a href="{{ path('app_collection', params) }}">ID ↓</a>
+                                    {% else %}
+                                        <a href="{{ path('app_collection', params) }}">ID ↑</a>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{ path('app_collection', params) }}">ID</a>
+                                {% endif %}
+                            </th>
+                            <th>
+                                {% set params = queryParams|merge({ sort: 'name', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}
+                                {% if sort == 'name' %}
+                                    {% if direction == 'ASC' %}
+                                        <a href="{{ path('app_collection', params) }}">Name ↓</a>
+                                    {% else %}
+                                        <a href="{{ path('app_collection', params) }}">Name ↑</a>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{ path('app_collection', params) }}">Name</a>
+                                {% endif %}
+                            </th>
+
+                            <th>
+                                {% set params = queryParams|merge({ sort: 'category', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}
+                                {% if sort == 'category' %}
+                                    {% if direction == 'ASC' %}
+                                        <a href="{{ path('app_collection', params) }}">Category ↓</a>
+                                    {% else %}
+                                        <a href="{{ path('app_collection', params) }}">Category ↑</a>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{ path('app_collection', params) }}">Category</a>
+                                {% endif %}
+                            </th>
+
+                            <th>
+                                {% set params = queryParams|merge({ sort: 'createdAt', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}
+                                {% if sort == 'createdAt' %}
+                                    {% if direction == 'ASC' %}
+                                        <a href="{{ path('app_collection', params) }}">Data created ↓</a>
+                                    {% else %}
+                                        <a href="{{ path('app_collection', params) }}">Data created ↑</a>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{ path('app_collection', params) }}">Data created</a>
+                                {% endif %}
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -44,7 +90,8 @@
                                 <td>{{ collection.id }}</td>
                                 <td>{{ collection.name }}</td>
                                 <td>{{ collection.category.name }}</td>
-                                <td>{{ collection.description }}</td>
+                                <td>{{ collection.createdAt ? collection.createdAt.format('Y-m-d H:i:s') : '' }}</td>
+
                                 <td class="d-flex justify-content-end">
                                     <a href="{{ path('app_collection_show', {'id': collection.id}) }}" type="button"
                                        class="btn btn-outline-primary d-inline-flex align-items-center justify-content-center p-0"
@@ -82,5 +129,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}

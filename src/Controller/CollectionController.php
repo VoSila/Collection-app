@@ -22,7 +22,7 @@ class CollectionController extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly Security               $security,
-        private PaginatorInterface $paginator,
+        private PaginatorInterface              $paginator,
     )
     {
     }
@@ -33,7 +33,11 @@ class CollectionController extends AbstractController
         $category = $request->get('category');
         $criteria = [];
 
-        if($category !== null){
+        $sortField = $request->query->get('sort', 'id');
+        $sortDirection = $request->query->get('direction', 'DESC');
+
+
+        if ($category !== null) {
             $criteria['category'] = $category;
         }
 
@@ -42,7 +46,7 @@ class CollectionController extends AbstractController
         if ($user instanceof UserInterface) {
             $userId = $user->getId();
 
-            $collections = $this->entityManager->getRepository(ItemCollection::class)->findBy($criteria);
+            $collections = $this->entityManager->getRepository(ItemCollection::class)->findBy($criteria, [$sortField => $sortDirection]);
 //            $collections = $this->entityManager->getRepository(ItemCollection::class)->findBy(['user' => $userId]);
 
             $pagination = $this->paginator->paginate(
@@ -54,6 +58,8 @@ class CollectionController extends AbstractController
             return $this->render('collection/index.html.twig', [
                 'pagination' => $pagination,
                 'collections' => $collections,
+                'queryParams' => $request->query->all(),
+
             ]);
         } else {
             dd('User Not Authorize');
@@ -137,7 +143,7 @@ class CollectionController extends AbstractController
 
 //        dd($this->isCsrfTokenValid('delete'.$itemCollection->getId(), $request->request->get('_token')));
 
-        if ($this->isCsrfTokenValid('delete'.$itemCollection->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $itemCollection->getId(), $request->request->get('_token'))) {
 //            dd($itemCollection);
             $this->entityManager->remove($itemCollection);
             $this->entityManager->flush();

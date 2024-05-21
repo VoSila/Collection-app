@@ -12,14 +12,17 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ItemCollectionRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(private readonly EntityManagerInterface $entityManager,
+                                ManagerRegistry                         $registry,
+
+    )
     {
         parent::__construct($registry, ItemCollection::class);
     }
 
-    public function getItemCollectionWithCustomAttributes(int $collectionId, EntityManagerInterface $entityManager)
+    public function getItemCollectionWithCustomAttributes(int $collectionId)
     {
-        $query = $entityManager->createQuery('
+        $query = $this->entityManager->createQuery('
         SELECT c, ca
         FROM App\Entity\ItemCollection c
         LEFT JOIN c.customItemAttributes ca
@@ -27,5 +30,17 @@ class ItemCollectionRepository extends ServiceEntityRepository
     ')->setParameter('collectionId', $collectionId);
 
         return $query->getOneOrNullResult();
+    }
+
+    public function getCategoryWithItemCollection($collectionId)
+    {
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.category', 'c')
+            ->addSelect('c')
+            ->where('i.id = :collectionId')
+            ->setParameter('collectionId', $collectionId)
+            ->getQuery()
+            ->getResult();
+
     }
 }

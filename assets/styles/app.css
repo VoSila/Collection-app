@@ -10036,6 +10036,7 @@ textarea {
 .post-meta a {
     color: #000; }
 .post-meta .author-figure img {
+    margin-top: 8px;
     width: 30px;
     border-radius: 50%; }
 
