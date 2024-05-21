@@ -4248,6 +4248,7 @@ fieldset:disabled .btn {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    justify-content: center;
     padding-left: 0;
     list-style: none; }
 
@@ -4307,29 +4308,29 @@ fieldset:disabled .btn {
     border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem; }
 
-.pagination-lg .page-link {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.25rem; }
+/*.pagination-lg .page-link {*/
+/*    padding: 0.75rem 1.5rem;*/
+/*    font-size: 1.25rem; }*/
 
-.pagination-lg .page-item:first-child .page-link {
-    border-top-left-radius: 0.3rem;
-    border-bottom-left-radius: 0.3rem; }
+/*.pagination-lg .page-item:first-child .page-link {*/
+/*    border-top-left-radius: 0.3rem;*/
+/*    border-bottom-left-radius: 0.3rem; }*/
 
-.pagination-lg .page-item:last-child .page-link {
-    border-top-right-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem; }
+/*.pagination-lg .page-item:last-child .page-link {*/
+/*    border-top-right-radius: 0.3rem;*/
+/*    border-bottom-right-radius: 0.3rem; }*/
 
-.pagination-sm .page-link {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem; }
+/*.pagination-sm .page-link {*/
+/*    padding: 0.25rem 0.5rem;*/
+/*    font-size: 0.875rem; }*/
 
-.pagination-sm .page-item:first-child .page-link {
-    border-top-left-radius: 0.2rem;
-    border-bottom-left-radius: 0.2rem; }
+/*.pagination-sm .page-item:first-child .page-link {*/
+/*    border-top-left-radius: 0.2rem;*/
+/*    border-bottom-left-radius: 0.2rem; }*/
 
-.pagination-sm .page-item:last-child .page-link {
-    border-top-right-radius: 0.2rem;
-    border-bottom-right-radius: 0.2rem; }
+/*.pagination-sm .page-item:last-child .page-link {*/
+/*    border-top-right-radius: 0.2rem;*/
+/*    border-bottom-right-radius: 0.2rem; }*/
 
 .badge {
     display: inline-block;
@@ -10071,19 +10072,19 @@ textarea {
     border-radius: 50%;
     display: inline-block; }
 
-.custom-pagination span, .custom-pagination a {
-    text-align: center;
-    display: inline-block;
-    height: 40px;
-    width: 40px;
-    line-height: 40px;
-    border-radius: 50%; }
+/*.custom-pagination span, .custom-pagination a {*/
+/*    text-align: center;*/
+/*    display: inline-block;*/
+/*    height: 40px;*/
+/*    width: 40px;*/
+/*    line-height: 40px;*/
+/*    border-radius: 50%; }*/
 
-.custom-pagination a {
-    background: #214252;
-    color: #fff; }
-.custom-pagination a:hover {
-    background: #214252; }
+/*.custom-pagination a {*/
+/*    background: #214252;*/
+/*    color: #fff; }*/
+/*.custom-pagination a:hover {*/
+/*    background: #214252; }*/
 
 .sidebar {
     padding-left: 5em; }
@@ -10135,32 +10136,32 @@ textarea {
     color: #fff;
     background: #214252; }
 
-.pagination {
-    margin-bottom: 5em;
-    text-align: center !important;
-    display: block; }
-.pagination li {
-    margin-right: 2px;
-    margin-bottom: 3px;
-    display: inline-block; }
-.pagination li a {
-    border-radius: 50% !important;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-    text-align: center; }
-.pagination li a:focus, .pagination li a:active {
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important; }
-.pagination li a:hover {
-    background: #214252;
-    color: #fff;
-    border: 1px solid transparent; }
-.pagination li.active a {
-    border: 1px solid transparent !important; }
+/*.pagination {*/
+/*    margin-bottom: 5em;*/
+/*    text-align: center !important;*/
+/*    display: block; }*/
+/*.pagination li {*/
+/*    margin-right: 2px;*/
+/*    margin-bottom: 3px;*/
+/*    display: inline-block; }*/
+/*.pagination li a {*/
+/*    border-radius: 50% !important;*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    line-height: 40px;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    display: inline-block;*/
+/*    text-align: center; }*/
+/*.pagination li a:focus, .pagination li a:active {*/
+/*    -webkit-box-shadow: none !important;*/
+/*    box-shadow: none !important; }*/
+/*.pagination li a:hover {*/
+/*    background: #214252;*/
+/*    color: #fff;*/
+/*    border: 1px solid transparent; }*/
+/*.pagination li.active a {*/
+/*    border: 1px solid transparent !important; }*/
 
 .categories, .sidelink {
     padding: 0;

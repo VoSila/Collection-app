@@ -20,8 +20,8 @@ class CustomItemAttributeValue
     #[ORM\JoinColumn(name: 'item_id', referencedColumnName: 'id')]
     private ?Item $item = null;
 
-    #[ORM\ManyToOne(targetEntity: CustomItemAttribute::class)]
-    #[ORM\JoinColumn(name: 'custom_item_attribute_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity: CustomItemAttribute::class, inversedBy: 'customItemAttributeValues')]
+    #[ORM\JoinColumn(name: 'custom_item_attribute_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ?CustomItemAttribute $customItemAttribute = null;
 
     public function getId(): ?int

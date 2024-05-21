@@ -8,6 +8,7 @@ use App\Entity\Item;
 use App\Entity\ItemCollection;
 use App\Form\CollectionType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,21 +21,38 @@ class CollectionController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly Security               $security
+        private readonly Security               $security,
+        private PaginatorInterface $paginator,
     )
     {
     }
 
     #[Route('/', name: 'app_collection')]
-    public function index(EntityManagerInterface $entityManager, Security $security): Response
+    public function index(Request $request): Response
     {
-        $user = $security->getUser();
+        $category = $request->get('category');
+        $criteria = [];
+
+        if($category !== null){
+            $criteria['category'] = $category;
+        }
+
+        $user = $this->security->getUser();
 
         if ($user instanceof UserInterface) {
             $userId = $user->getId();
-            $collections = $entityManager->getRepository(ItemCollection::class)->findBy(['user' => $userId]);
+
+            $collections = $this->entityManager->getRepository(ItemCollection::class)->findBy($criteria);
+//            $collections = $this->entityManager->getRepository(ItemCollection::class)->findBy(['user' => $userId]);
+
+            $pagination = $this->paginator->paginate(
+                $collections,
+                $request->query->getInt('page', 1),
+                10
+            );
 
             return $this->render('collection/index.html.twig', [
+                'pagination' => $pagination,
                 'collections' => $collections,
             ]);
         } else {
@@ -43,18 +61,24 @@ class CollectionController extends AbstractController
     }
 
     #[Route('/{id}/show', name: 'app_collection_show')]
-    public function show(EntityManagerInterface $entityManager, Security $security, Request $request, $id): Response
+    public function show(Request $request, $id): Response
     {
-        $user = $security->getUser();
+        $user = $this->security->getUser();
         if ($user instanceof UserInterface) {
 
-            $collection = $entityManager->getRepository(ItemCollection::class)->find($id);
-            $items = $entityManager->getRepository(Item::class)->findBy(['itemCollection' => $id]);
-            $customItems = $entityManager->getRepository(CustomItemAttribute::class)->findBy(['itemCollection' => $id]);
+            $collection = $this->entityManager->getRepository(ItemCollection::class)->find($id);
+            $items = $this->entityManager->getRepository(Item::class)->findBy(['itemCollection' => $id]);
+            $customItems = $this->entityManager->getRepository(CustomItemAttribute::class)->findBy(['itemCollection' => $id]);
+
+            $pagination = $this->paginator->paginate(
+                $items,
+                $request->query->getInt('page', 1),
+                10
+            );
 
             return $this->render('collection/show.html.twig', [
+                'pagination' => $pagination,
                 'collection' => $collection,
-                'items' => $items,
                 'customItems' => $customItems,
             ]);
         } else {
@@ -72,8 +96,6 @@ class CollectionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-//            dd($form);
-
             $collection->setUser($user);
             $this->entityManager->persist($collection);
             $this->entityManager->flush();
@@ -84,7 +106,7 @@ class CollectionController extends AbstractController
         }
 
         return $this->render('collection/form.html.twig', [
-            'action' => 'create',
+            'action' => 'Create',
             'form' => $form->createView()
         ]);
     }
@@ -96,12 +118,6 @@ class CollectionController extends AbstractController
 
         $form->handleRequest($request);
 
-//        $currentUser = $this->getUser();
-
-//        if ($collection->getUser() !== $currentUser) {
-//            throw $this->createAccessDeniedException('You are not allowed to access this collection.');
-//        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
 
@@ -109,9 +125,24 @@ class CollectionController extends AbstractController
         }
 
         return $this->render('collection/form.html.twig', [
-            'action' => 'edit',
+            'action' => 'Edit',
             'form' => $form->createView(),
             'collection' => $collection
         ]);
+    }
+
+    #[Route('/{id}/delete', name: 'app_collection_delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request, ItemCollection $itemCollection,): Response
+    {
+
+//        dd($this->isCsrfTokenValid('delete'.$itemCollection->getId(), $request->request->get('_token')));
+
+        if ($this->isCsrfTokenValid('delete'.$itemCollection->getId(), $request->request->get('_token'))) {
+//            dd($itemCollection);
+            $this->entityManager->remove($itemCollection);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_collection', [], Response::HTTP_SEE_OTHER);
     }
 }

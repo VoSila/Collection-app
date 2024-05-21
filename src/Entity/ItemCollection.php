@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ItemCollectionRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ItemCollection
 {
     #[ORM\Id]
@@ -37,6 +38,12 @@ class ItemCollection
     #[Assert\Valid()]
     private ?User $user = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updateAt = null;
+
     /**
      * @var Collection<int, CustomItemAttribute>
      */
@@ -48,6 +55,18 @@ class ItemCollection
     public function __construct()
     {
         $this->customItemAttributes = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdateAtValue(): void
+    {
+        $this->updateAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -115,6 +134,27 @@ class ItemCollection
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(?\DateTimeInterface $updateAt): void
+    {
+        $this->updateAt = $updateAt;
+    }
+
 
     /**
      * @return Collection<int, CustomItemAttribute>

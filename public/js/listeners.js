@@ -1,71 +1,34 @@
 document.addEventListener('DOMContentLoaded', function () {
-  $('#block_button').on('click', function () {
-    let checkboxes = $('input[type="checkbox"]:checked');
-    let selectedCollectionIds = [];
+  document.getElementById('block_button_delete').addEventListener('click', function () {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    var selectedCollectionIds = [];
 
-    checkboxes.each(function (index) {
-      selectedCollectionIds.push($(checkboxes[index]).data('collectionId'));
-      if (selectedCollectionIds[0] == null) {
-        selectedCollectionIds = selectedCollectionIds.slice(1)
-      }
+    checkboxes.forEach(function (checkbox) {
+      selectedCollectionIds.push(checkbox.dataset.collectionId);
     });
-    console.log(selectedCollectionIds)
 
-    if (selectedCollectionIds.length > 1) {
-      console.log('Выберите только одну коллекцию для редактирования');
+    if (selectedCollectionIds.length === 0) {
+      alert('Please select at least one collection to delete.');
       return;
     }
-    let url = '/collections/' + selectedCollectionIds + '/update';
+    var collectionId = document.getElementById('collectionId').value;
+    console.log(collectionId);
+    if (confirm('Are you sure you want to delete selected collections?')) {
+      selectedCollectionIds.forEach(function (collectionId) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/collections/' + collectionId + '/delete'; // Update the action URL
 
-    window.location.href = url;
+        var csrfTokenInput = document.createElement('input');
+        csrfTokenInput.type = 'hidden';
+        csrfTokenInput.name = '_token';
+        csrfTokenInput.value =  '{{ csrf_token( ~ 9) }}';
+
+        form.appendChild(csrfTokenInput);
+
+        document.body.appendChild(form);
+        form.submit();
+      });
+    }
   });
 });
-//
-//   // Click handler for check all checkboxes
-//   $('#selectAllCheckbox').on('click', function () {
-//     let state = $('#selectAllCheckbox').prop('checked');
-//     changeCheckboxesState(state);
-//   });
-// });
-//
-// function changeCheckboxesState(state) {
-//   $('#selectAllCheckbox').prop('checked', state);
-//
-//   let checkboxes = $('input[type="checkbox"][data-user-id]:not(#selectAllCheckbox)');
-//   checkboxes.each(function (index) {
-//     $(checkboxes[index]).prop('checked', state);
-//   });
-// }
-//
-// function resetCheckboxesState() {
-//   $('#selectAllCheckbox').prop('checked', false);
-//
-//   $('input[type="checkbox"][data-user-id]:not(#selectAllCheckbox)').prop('checked', false);
-// }
-
-
-// function sendDataToServer(path) {
-//   console.log(path)
-//   $.ajax({
-//     url: path,
-//     type: 'POST',
-//     contentType: 'application/json',
-//     beforeSend: function () {
-//       $('.loader').show();
-//     },
-//     success: function (data) {
-//       $('.loader').hide();
-//
-//     },
-//     error: function () {
-//       $('.loader').hide();
-//       console.log('Ajax request failed.');
-//     },
-//     complete: function (xhr, status) {
-//       if (xhr.status === 403) {
-//         window.location.reload();
-//       }
-//       console.log('Ajax request completed with status: ' + status);
-//     }
-//   });
-// }
