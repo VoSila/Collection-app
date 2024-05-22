@@ -9824,13 +9824,20 @@ textarea {
     background: -o-linear-gradient(top, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);
     background: linear-gradient(to bottom, transparent 0%, transparent 18%, rgba(0, 0, 0, 0.8) 99%, rgba(0, 0, 0, 0.8) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#cc000000',GradientType=0 ); }
-
+.with-overlay-top {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
+}
+.retro-layout .text_category {
+    position: absolute;
+    z-index: 10;
+    padding: 20px;
+    width: 100%; }
 .retro-layout .text {
     position: absolute;
     bottom: 0;
     z-index: 10;
     padding: 20px;
-    max-width: 350px; }
+    width: 100%; }
 .retro-layout .text h2, .retro-layout .text .h2 {
     color: #fff;
     font-size: 18px;
@@ -10004,19 +10011,29 @@ textarea {
 .posts-entry .blog-entry-search-item .img-link img {
     margin-bottom: 0;
     border-radius: 10px; }
-
 .read-more {
     border-bottom: 2px solid #214252; }
 
+.post-entry-alt{
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.post-entry-alt:hover{
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.9);
+}
 .post-entry-alt h2, .post-entry-alt .h2 {
+    width: 100%;
     font-size: 18px;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+}
 .post-entry-alt h2 a, .post-entry-alt .h2 a {
-    color: #4D4C7D; }
+    color: #000000; }
 
 .post-entry-alt .excerpt {
-    padding-left: 20px;
-    padding-right: 20px; }
+    padding-left: 5px;
+    padding-right: 5px; }
 
 .post-entry-alt .img-link {
     position: relative;

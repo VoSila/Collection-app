@@ -27,19 +27,6 @@ class ItemRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-
-
-    public function findLastFiveWithEagerLoading()
-    {
-        return $this->createQueryBuilder('i')
-            ->leftJoin('i.customItemAttributeValues', 'cav')
-            ->addSelect('cav')
-            ->orderBy('i.createdAt', 'DESC')
-            ->setMaxResults(6)
-            ->getQuery()
-            ->getResult();
-    }
-
     public function findTopFiveLargestItemCollectionIds()
     {
         return $this->createQueryBuilder('i')
@@ -47,6 +34,19 @@ class ItemRepository extends ServiceEntityRepository
             ->groupBy('i.itemCollection')
             ->orderBy('itemCount', 'DESC')
             ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLastFiveWithEagerLoading()
+    {
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.tags', 't')
+            ->addSelect('t')
+            ->leftJoin('i.itemCollection', 'ic')
+            ->addSelect('ic')
+            ->orderBy('i.createdAt', 'DESC')
+            ->setMaxResults(6)
             ->getQuery()
             ->getResult();
     }

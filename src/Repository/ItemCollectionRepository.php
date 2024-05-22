@@ -32,15 +32,16 @@ class ItemCollectionRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function getCategoryWithItemCollection($collectionId)
+    public function getCategoriesWithItemCollections(array $collectionIds)
     {
         return $this->createQueryBuilder('i')
             ->leftJoin('i.category', 'c')
+            ->leftJoin('i.user', 'u')
+            ->addSelect('u')
             ->addSelect('c')
-            ->where('i.id = :collectionId')
-            ->setParameter('collectionId', $collectionId)
+            ->where('i.id IN (:collectionIds)')
+            ->setParameter('collectionIds', $collectionIds)
             ->getQuery()
             ->getResult();
-
     }
 }

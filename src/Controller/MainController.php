@@ -2,14 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\CustomItemAttribute;
-use App\Entity\CustomItemAttributeValue;
-use App\Entity\Item;
-use App\Entity\ItemCollection;
-use App\Repository\ItemCollectionRepository;
-use App\Repository\ItemRepository;
+use App\Service\Main\MainService;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,22 +20,12 @@ class MainController extends AbstractController
     }
 
     #[Route('/', name: 'app_main')]
-    public function index(ItemRepository $itemRepository, ItemCollectionRepository $itemCollectionRepository): Response
+    public function index(MainService $mainService): Response
     {
-        $topFiveCollections = $itemRepository->findTopFiveLargestItemCollectionIds();
-
-        $collections = [];
-        foreach ($topFiveCollections as $collection) {
-            $collectionsId = $collection['itemCollectionId'];
-            $collections[] = $itemCollectionRepository->getCategoryWithItemCollection($collectionsId);
-        }
-
-//        dd($collections);
-        $items = $itemRepository->findLastFiveWithEagerLoading();
-
         return $this->render('main/index.html.twig', [
-            'items' => $items,
-            'collections' => $collections,
+            'items' => $mainService->getItems(),
+            'collections' => $mainService->getCollections(),
+            'tags' => $mainService->getTags()
         ]);
     }
 }

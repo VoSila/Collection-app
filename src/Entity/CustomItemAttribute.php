@@ -26,6 +26,12 @@ class CustomItemAttribute
     #[ORM\JoinColumn(nullable: false)]
     private ?ItemCollection $itemCollection = null;
 
+    #[ORM\OneToMany(targetEntity: CustomItemAttributeValue::class, mappedBy: 'customItemAttribute', cascade: ["persist"], orphanRemoval: true)]
+    private Collection $customItemAttributeValues;
+
+    public function __construct(){
+        $this->customItemAttributeValues = new ArrayCollection();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +67,36 @@ class CustomItemAttribute
     public function setItemCollection(?ItemCollection $itemCollection): self
     {
         $this->itemCollection = $itemCollection;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CustomItemAttributeValue>
+     */
+    public function getCustomItemAttributeValues(): Collection
+    {
+        return $this->customItemAttributeValues;
+    }
+
+    public function addCustomItemAttributeValue(CustomItemAttributeValue $customItemAttributeValue): static
+    {
+        if (!$this->customItemAttributeValues->contains($customItemAttributeValue)) {
+            $this->customItemAttributeValues->add($customItemAttributeValue);
+            $customItemAttributeValue->setCustomItemAttribute($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomItemAttributeValue(CustomItemAttributeValue $customItemAttributeValue): static
+    {
+        if ($this->customItemAttributeValues->removeElement($customItemAttributeValue)) {
+            // set the owning side to null (unless already changed)
+            if ($customItemAttributeValue->getCustomItemAttribute() === $this) {
+                $customItemAttributeValue->setCustomItemAttribute(null);
+            }
+        }
+
         return $this;
     }
 }

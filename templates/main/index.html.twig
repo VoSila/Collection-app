@@ -13,28 +13,22 @@
                     </div>
                 </div>
                 <div class="row align-items-stretch retro-layout">
-                    {% for itemsCollections in collections %}
-                        {% for collection in itemsCollections %}
-{#                                    {% if collections|length < 5 %}#}
-{#                            {{ dump(collections|length) }}#}
-                            <div class="col-md-4">
+                    {% for collection in collections %}
+{#                        {{ dump(collection) }}#}
+
+                        <div class="col-md-4">
                                 <a href="{{ path('app_collection', {'id': collection.id}) }}"
                                    class="h-entry mb-30 v-height gradient">
-
-                                    <div class="featured-img"
-                                         style="background-image: url('https://s0.rbk.ru/v6_top_pics/media/img/9/81/346990059783819.webp');"></div>
+                                    <div class="featured-img" style="background-image: url('https://s0.rbk.ru/v6_top_pics/media/img/9/81/346990059783819.webp');"></div>
+                                    <div class="text_category with-overlay-top">
+                                        <h6 style="color: white"> Category - {{ collection.category.name }}</h6>
+                                    </div>
                                     <div class="text">
                                         <h2>{{ collection.name }}</h2>
-                                        <p style="color: white"> Category - {{ collection.category.name }}</p>
-                                        <span> Vladimir Silkin &nbsp;-&nbsp; {{ collection.createdAt ? collection.createdAt.format('F j, Y') : '' }}</span>
-                                        <span>tag1 tag2 tag3</span>
-
+                                        <span> {{ collection.user.email }} &nbsp;-&nbsp; {{ collection.createdAt ? collection.createdAt.format('F j, Y') : '' }}</span>
                                     </div>
                                 </a>
                             </div>
-{#                            {% endif %}#}
-                        {% endfor %}
-
                     {% endfor %}
                 </div>
             </div>
@@ -60,24 +54,31 @@
 {#                                                        {{ dump(item) }}#}
                                 <div class="col-lg-4 mb-4">
                                     <div class="post-entry-alt">
-                                        <a href="{{ path('app_item', {'id': item.id}) }}"
-                                           class="img-link"><img
-                                                src="https://s0.rbk.ru/v6_top_pics/media/img/9/81/346990059783819.webp"
-                                                alt="Image"
-                                                class="img-fluid"></a>
+{#                                        <a href="{{ path('app_item', {'id': item.id}) }}"#}
+{#                                           class="img-link"><img#}
+{#                                                src="https://s0.rbk.ru/v6_top_pics/media/img/9/81/346990059783819.webp"#}
+{#                                                alt="Image"#}
+{#                                                class="img-fluid"></a>#}
                                         <div class="excerpt">
                                             <h2>
                                                 <a href="{{ path('app_item', {'id': item.id}) }}">{{ item.name }}</a>
                                             </h2>
                                             <h4></h4>
-                                            <h2>Collection - Collection Name</h2>
-                                            <p> tag1 tag2 tag3</p>
+                                            <p>Collection: {{ item.itemCollection.name }}</p>
+                                            {% if item.tags is not empty %}
+                                                <p>Tags:
+                                                    {% for tag in item.tags %}
+                                                        {{ tag.name }}{% if not loop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </p>
+                                            {% endif %}
+
                                             <div class="post-meta align-items-center text-left clearfix">
                                                 <figure class="author-figure mb-0 me-3 float-start"><img
                                                         src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
                                                         alt="Image" class="img-fluid"></figure>
                                                 <span class="d-inline-block mt-1">
-                                                    <a href="#">Vladimir Silkin</a>
+                                                    <a href="#">{{ item.itemCollection.user.email }}</a>
                                                 </span><br>
                                                 <span>{{ item.createdAt ? item.createdAt.format('F j, Y') : '' }}</span>
                                             </div>
@@ -91,18 +92,9 @@
                         <div class="sidebar-box">
                             <h3 class="heading">Tags</h3>
                             <ul class="tags">
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Adventure</a></li>
-                                <li><a href="#">Food</a></li>
-                                <li><a href="#">Lifestyle</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Freelancing</a></li>
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Adventure</a></li>
-                                <li><a href="#">Food</a></li>
-                                <li><a href="#">Lifestyle</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Freelancing</a></li>
+                                {% for tag in tags %}
+                                <li><a href="#">{{ tag.name }}</a></li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
