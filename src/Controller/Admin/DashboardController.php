@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
 use App\Entity\CollectionCategory;
 use App\Entity\ItemCollection;
 use App\Entity\User;
@@ -23,7 +22,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Itransition Lats Task');
+            ->setTitle('Collections App');
     }
 
     public function configureMenuItems(): iterable

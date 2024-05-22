@@ -42,13 +42,23 @@
                             <td>{{ item.name }}</td>
                             <td>{{ item.createdAt ? item.createdAt.format('Y-m-d H:i:s') : '' }}</td>
 
-                            <td>
+                            <td class="d-flex justify-content-end">
                                 <a href="{{ path('app_item', {'id': item.id}) }}" type="button" class="btn btn-outline-primary d-inline-flex align-items-center justify-content-center p-0" style="width: 50px; height: 20px; text-decoration: none; overflow: hidden;">
                                     Show
                                 </a>
                                 <a href="{{ path('app_item_edit', {'id': item.id}) }}" type="button" class="btn btn-outline-secondary d-inline-flex align-items-center justify-content-center p-0" style="width: 50px; height: 20px; text-decoration: none; overflow: hidden;">
                                     Edit
                                 </a>
+                                <form id="deleteForm" method="post"
+                                      action="{{ path('app_item_delete', {'id': item.id, 'collectionId': collection.id}) }}">
+                                    <input type="hidden" name="_token"
+                                           value="{{ csrf_token('delete' ~ item.id) }}">
+                                    <button id="deleteButton"
+                                            class="btn btn-outline-danger d-inline-flex align-items-center justify-content-center p-0"
+                                            style="width: 70px; height: 20px; text-decoration: none; overflow: hidden; vertical-align: top; margin-left: 5px">
+                                        Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     {% else %}

@@ -20,6 +20,7 @@ class CustomItemAttributeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('cia')
             ->andWhere('cia.name = :name')
             ->setParameter('name', $name)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }

@@ -3,14 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Item;
-use App\Entity\Tag;
 use App\Form\ItemType;
-use App\Repository\ItemCollectionRepository;
-use App\Repository\TagRepository;
+use App\Service\ItemService;
 use Doctrine\ORM\EntityManagerInterface;
+use JetBrains\PhpStorm\NoReturn;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +17,7 @@ class ItemController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface   $entityManager,
-        private readonly ItemCollectionRepository $itemCollectionRepository,
+        private readonly ItemService              $itemService,
     )
     {
     }
@@ -34,99 +31,54 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}/create', name: 'app_item_create', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function create(Request $request, TagRepository $tagRepository, $id): Response
+    public function create(Request $request, $id): Response
     {
+        $result = $this->itemService->createItem($request, ItemType::class, $id);
 
-        $collection = $this->itemCollectionRepository->getItemCollectionWithCustomAttributes($id, $this->entityManager);
-        $tags = $tagRepository->findAll();
-
-        $item = new Item();
-        $customAttributes = $collection->getCustomItemAttributes();
-
-        $item->setItemCollection($collection);
-
-        $form = $this->createForm(ItemType::class, $item, [
-            'customAttributes' => $customAttributes,
-            'tags' => $tags,
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($item);
-            $this->entityManager->flush();
-
+        if ($result['success']) {
             $this->addFlash('success', 'Item successfully created');
-            $url = $request->getUriForPath("/items");
 
-            return new RedirectResponse($url);
+            return $this->redirectToRoute('app_item', ['id' => $result['item']->getId()]);
         }
 
         return $this->render('item/form.html.twig', [
-            'action' => 'create',
-            'form' => $form->createView(),
+            'action' => 'Create',
+            'form' => $result['form']->createView()
         ]);
+
     }
 
     #[Route('/{id}/edit', name: 'app_item_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function edit(Request $request, $id): Response
+    public function edit(Request $request, Item $item, $id): Response
     {
-        $item = $this->entityManager->getRepository(Item::class)->findWithEagerLoading($id);
-        $collectionId = $item->getItemCollection()->getId();
 
-        $collection = $this->itemCollectionRepository->getItemCollectionWithCustomAttributes($collectionId, $this->entityManager);
-        $customAttributes = $collection->getCustomItemAttributes();
+        $result = $this->itemService->editItem($request, ItemType::class, $id);
 
-        $form = $this->createForm(ItemType::class, $item, [
-            'customAttributes' => $customAttributes,
-        ]);
+        if ($result['success']) {
+            $this->addFlash('success', 'Collection successfully created');
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-
-            $this->addFlash('success', 'Item successfully updated');
+            return $this->redirectToRoute('app_collection_show', [
+                'id' => $result['item']->getItemCollection()->getId()
+            ]);
         }
 
         return $this->render('item/form.html.twig', [
-            'action' => 'edit',
-            'form' => $form->createView(),
+            'action' => 'Edit',
+            'form' => $result['form']->createView(),
         ]);
     }
 
-    #[Route('/autocomplete/tags', name: 'autocomplete_tags')]
-    public function getTags(Request $request): Response
+    #[NoReturn]
+    #[Route('/{id}/delete', name: 'app_item_delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request, Item $item): Response
     {
-        $searchTerm = $request->query->get('query');
-        $tags = $this->entityManager->getRepository(Tag::class)->createQueryBuilder('t')
-            ->where('t.name LIKE :searchTerm')
-            ->setParameter('searchTerm', '%' . $searchTerm . '%')
-            ->getQuery()
-            ->getResult();
-
-        $results = [];
-        foreach ($tags as $tag) {
-            $results[] = [
-                'id' => $tag->getId(),
-                'name' => $tag->getName(),
-            ];
+        if ($this->isCsrfTokenValid('delete' . $item->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($item);
+            $this->entityManager->flush();
         }
 
-        return new JsonResponse($results);
-
+        return $this->redirectToRoute('app_collection_show', [
+            'id' => $request->query->getInt('collectionId')
+        ], Response::HTTP_SEE_OTHER);
     }
-
-//    #[Route('/{id}/delete', name: 'app_collection_delete', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-//    public function delete(Request $request, Item $item): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$item->getId(), $request->request->get('_token'))) {
-//            $this->entityManager->remove($item);
-//            $this->entityManager->flush();
-//        }
-//
-//        return $this->render('item/form.html.twig', [
-//            'action' => 'delete',
-//        ]);
-//    }
 }

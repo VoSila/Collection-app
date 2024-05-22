@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Main\MainService;
+use App\Service\MainService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;

@@ -23,4 +23,13 @@ class TagRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findBySearchTerm(string $searchTerm): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.name LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }

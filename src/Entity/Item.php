@@ -33,7 +33,7 @@ class Item
     #[ORM\OneToMany(targetEntity: CustomItemAttributeValue::class, mappedBy: 'item', cascade: ["persist"], orphanRemoval: true)]
     private Collection $customItemAttributeValues;
 
-    #[ORM\ManyToOne(targetEntity: ItemCollection::class, cascade: ["remove"])]
+    #[ORM\ManyToOne(targetEntity: ItemCollection::class)]
     #[ORM\JoinColumn(name: 'item_collection_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ?ItemCollection $itemCollection = null;
 

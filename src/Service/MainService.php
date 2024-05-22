@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Service\Main;
+namespace App\Service;
 
 use App\Repository\ItemCollectionRepository;
 use App\Repository\ItemRepository;
 use App\Repository\TagRepository;
 
-class MainService
+readonly class MainService
 {
     public function __construct(
-        private readonly TagRepository            $tagRepository,
-        private readonly ItemRepository           $itemRepository,
-        private readonly ItemCollectionRepository $itemCollectionRepository
+        private ItemCollectionRepository $itemCollectionRepository,
+        private ItemRepository           $itemRepository,
+        private TagRepository            $tagRepository
     )
     {
     }
