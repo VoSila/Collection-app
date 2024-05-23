@@ -4,26 +4,35 @@
             <div class="site-navigation">
                 <div class="row g-0 align-items-center">
                     <div class="col-2">
-                        <a href="{{ path('app_main') }}" class="logo m-0 float-start">Collections App<span
+                        <a href="{{ path('app_main') }}" class="logo m-0 float-start">Collections<span
                                 class="text-primary">.</span></a>
                     </div>
-                    <div class="col-8 text-center">
+                    <div class="col-6 text-center">
                         <form action="#" class="search-form d-inline-block d-lg-none">
                             <input type="text" class="form-control" placeholder="Search...">
                             <span class="bi-search"></span>
                         </form>
 
                         <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="{{ path('app_collection') }}">Collections</a></li>
-                            <li><a href="{{ path('app_item') }}">Items</a></li>
-                            <li><a href="{{ path('app_login') }}">Sign In</a></li>
+                            <li><a href="#">{{ 'home'|trans }}</a></li>
+                            <li><a href="{{ path('app_collection') }}">{{ 'collections'|trans }}</a></li>
+                            <li><a href="{{ path('app_item') }}">{{ 'items'|trans }}</a></li>
+                            <li><a href="{{ path('app_login') }}">{{ 'signIn'|trans }}</a></li>
                             {% if app.user %}
-                                <li><a href="{{ path('app_logout') }}">Sign Out</a></li>
+                                <li><a href="{{ path('app_logout') }}">{{ 'signOut'|trans }}</a></li>
                             {% else %}
-                                <li><a href="{{ path('app_register') }}">Sign Up</a></li>
+                                <li><a href="{{ path('app_register') }}">{{ 'signUp'|trans }}</a></li>
                             {% endif %}
                         </ul>
+                    </div>
+                    <div class="col-2  container ">
+                        <div class="lang-switch">
+                            <span class="lang-label">EN</span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="languageSwitch" data-toggle="language">
+                            </div>
+                            <span class="lang-label">RU</span>
+                        </div>
                     </div>
                     <div class="col-2 text-end">
                         <a href="#"
@@ -31,7 +40,7 @@
                             <span></span>
                         </a>
                         <form action="#" class="search-form d-none d-lg-inline-block">
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" class="form-control" placeholder="{{ 'search'|trans }}...">
                             <span class="bi-search"></span>
                         </form>
                     </div>
@@ -40,4 +49,22 @@
         </div>
     </div>
 </nav>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const savedLocale = localStorage.getItem('locale');
+        const languageSwitch = document.getElementById('languageSwitch');
+
+        languageSwitch.checked = savedLocale === 'ru';
+
+        languageSwitch.addEventListener('change', function () {
+            if (this.checked) {
+                localStorage.setItem('locale', 'ru');
+                window.location.href = '{{ path('app_change_locale', { 'locale': 'ru' }) }}';
+            } else {
+                localStorage.setItem('locale', 'en');
+                window.location.href = '{{ path('app_change_locale', { 'locale': 'en' }) }}';
+            }
+        });
+    });
+</script>
 </header>

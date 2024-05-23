@@ -1,0 +1,34 @@
+#main
+hello: "Hellos"
+welcome: "Welcome"
+collection: "Collection"
+category: "Category"
+tags: "Tags"
+popularCollection: "Popular collection"
+lastAddItems: "Last added items"
+
+#header
+home: "Home"
+collections: "Collections"
+items: "Items"
+signIn: "Sign in"
+signOut: "Sign out"
+signUp: "Sign up"
+search: "Search"
+
+#collections
+name: "Name"
+dateCreated: "Data created"
+createNewCollection: "Create new collection"
+createNewItem: "Create new item"
+delete: "Delete"
+show: "Show"
+edit: "Edit"
+
+#loginForm
+login: "Log in"
+registration: "Registration"
+password: "Password"
+rememberMe: "Remember me"
+agreeTerms: "Agree terms"
+

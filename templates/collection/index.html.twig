@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Collections{% endblock %}
+{% block title %}{{ 'collections'|trans }}{% endblock %}
 
 {% block body %}
     <div class="col-auto d-flex justify-content-between">
@@ -9,11 +9,11 @@
             <div class="col-auto d-flex justify-content-between">
                 <a id="block_button_create" href="{{ path('app_collection_create') }}" type="button"
                    class="btn btn-outline-success" style="margin: 10px 0 10px 0">
-                    Create new collection
+                    {{ 'createNewCollection'|trans }}
                 </a>
                 <button id="block_button_delete" type="button" class="btn btn-outline-danger"
                         style="margin: 10px 15px 10px 0" data-action="Delete">
-                    Delete
+                    {{ 'delete'|trans }}
                 </button>
             </div>
 
@@ -44,12 +44,12 @@
                                 {% set params = queryParams|merge({ sort: 'name', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}
                                 {% if sort == 'name' %}
                                     {% if direction == 'ASC' %}
-                                        <a href="{{ path('app_collection', params) }}">Name ↓</a>
+                                        <a href="{{ path('app_collection', params) }}">{{ 'name'|trans }} ↓</a>
                                     {% else %}
-                                        <a href="{{ path('app_collection', params) }}">Name ↑</a>
+                                        <a href="{{ path('app_collection', params) }}">{{ 'name'|trans }} ↑</a>
                                     {% endif %}
                                 {% else %}
-                                    <a href="{{ path('app_collection', params) }}">Name</a>
+                                    <a href="{{ path('app_collection', params) }}">{{ 'name'|trans }}</a>
                                 {% endif %}
                             </th>
 
@@ -57,12 +57,12 @@
                                 {% set params = queryParams|merge({ sort: 'category', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}
                                 {% if sort == 'category' %}
                                     {% if direction == 'ASC' %}
-                                        <a href="{{ path('app_collection', params) }}">Category ↓</a>
+                                        <a href="{{ path('app_collection', params) }}">{{ 'category'|trans }} ↓</a>
                                     {% else %}
-                                        <a href="{{ path('app_collection', params) }}">Category ↑</a>
+                                        <a href="{{ path('app_collection', params) }}">{{ 'category'|trans }} ↑</a>
                                     {% endif %}
                                 {% else %}
-                                    <a href="{{ path('app_collection', params) }}">Category</a>
+                                    <a href="{{ path('app_collection', params) }}">{{ 'category'|trans }}</a>
                                 {% endif %}
                             </th>
 
@@ -70,12 +70,12 @@
                                 {% set params = queryParams|merge({ sort: 'createdAt', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}
                                 {% if sort == 'createdAt' %}
                                     {% if direction == 'ASC' %}
-                                        <a href="{{ path('app_collection', params) }}">Data created ↓</a>
+                                        <a href="{{ path('app_collection', params) }}">{{ 'dateCreated'|trans }} ↓</a>
                                     {% else %}
-                                        <a href="{{ path('app_collection', params) }}">Data created ↑</a>
+                                        <a href="{{ path('app_collection', params) }}">{{ 'dateCreated'|trans }} ↑</a>
                                     {% endif %}
                                 {% else %}
-                                    <a href="{{ path('app_collection', params) }}">Data created</a>
+                                    <a href="{{ path('app_collection', params) }}">{{ 'dateCreated'|trans }}</a>
                                 {% endif %}
                             </th>
                         </tr>

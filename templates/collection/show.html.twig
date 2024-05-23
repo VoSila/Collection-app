@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ collection.name }} Collection{% endblock %}
+{% block title %}{{ collection.name }} {{ 'items'|trans }}{% endblock %}
 
 {% block body %}
 
     <div class="container" style="margin-top: 50px;">
         <div class="row">
-            <h1>{{ collection.name }} - Collection</h1>
+            <h1>{{ collection.name }} - {{ 'collection'|trans }}</h1>
         </div>
 
         <div class="col-auto d-flex justify-content-between">
             <a id="block_button_create" href="{{ path('app_item_create', {'id': collection.id}) }}" type="button" class="btn btn-outline-success" style="margin: 10px 0 10px 0">
-                Create new item
+                {{ 'createNewItem'|trans }}
             </a>
             <button id="block_button_delete" type="button" class="btn btn-outline-danger" style="margin: 10px 15px 10px 0" data-action="Delete">
-                Delete
+                {{ 'delete'|trans }}
             </button>
         </div>
 
@@ -26,9 +26,9 @@
                         <th><input id="selectAllCheckbox" class="PrivateSwitchBase-input css-1m9pwf3"
                                    tabindex="-1"
                                    type="checkbox" data-indeterminate="false" aria-label="Select all rows"></th>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Data create</th>
+                        <th>ID</th>
+                        <th>{{ 'name'|trans }}</th>
+                        <th>{{ 'dateCreated'|trans }}</th>
 
                     </tr>
                     </thead>

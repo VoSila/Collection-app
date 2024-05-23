@@ -16,6 +16,11 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'app2' => [
+        'path' => './assets/app2.js',
+        'entrypoint' => true,
+    ],
+
     'bootstrap' => [
         'version' => '5.3.3',
     ],

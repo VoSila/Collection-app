@@ -1,0 +1,34 @@
+#main
+hello: "Привет"
+welcome: "Добро пожаловать"
+collection: "Коллекция"
+category: "Категория"
+tags: "Тэги"
+popularCollection: "Популярные коллекции"
+lastAddItems: "Последние добавленные предметы"
+
+#header
+home: "Главная"
+collections: "Коллекции"
+items: "Предметы"
+signIn: "Войти"
+signOut: "Выйти"
+signUp: "Регистрация"
+search: "Поиск"
+
+#collections
+name: "Название"
+dateCreated: "Дата создания"
+createNewCollection: "Создать новую коллекцию"
+createNewItem: "Создать новый предмет"
+delete: "Удалить"
+show: "Показать"
+edit: "Редактировать"
+
+#loginForm
+login: "Авторирация"
+registration: "Регистрация"
+password: "Пароль"
+rememberMe: "Запомнить меня"
+agreeTerms: "Согласен с условиями"
+

@@ -1,27 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}{% trans %}welcome{% endtrans %}{% endblock %}
 
 {% block body %}
     {% block header %}{% endblock %}
     <div>
+        <a href="{{ path('app_switch_theme', {'theme': 'app-dark'}) }}">Light Theme</a>
+        <a href="{{ path('app_switch_theme', {'theme': 'app-light'}) }}">Dark Theme</a>
+
         <section class="section bg-light">
             <div class="container">
                 <div class="row mb-4">
                     <div class="col-sm-6">
-                        <h2 class="posts-entry-title">Top 5 collection</h2>
+                        <h2 class="posts-entry-title">{{ 'popularCollection'|trans }}</h2>
                     </div>
                 </div>
                 <div class="row align-items-stretch retro-layout">
                     {% for collection in collections %}
-{#                        {{ dump(collection) }}#}
-
                         <div class="col-md-4">
                                 <a href="{{ path('app_collection', {'id': collection.id}) }}"
                                    class="h-entry mb-30 v-height gradient">
-                                    <div class="featured-img" style="background-image: url('https://s0.rbk.ru/v6_top_pics/media/img/9/81/346990059783819.webp');"></div>
+                                    <div class="featured-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa--UQzH26ZTgWAh0rcUBRn6_G0jhHmaUPoQ0W7AqSgOEkcFzvdZbiTIwZ43CRtX7oE-E&usqp=CAU');"></div>
                                     <div class="text_category with-overlay-top">
-                                        <h6 style="color: white"> Category - {{ collection.category.name }}</h6>
+                                        <h6 style="color: white"> {{ 'category'|trans }} - {{ collection.category.name }}</h6>
                                     </div>
                                     <div class="text">
                                         <h2>{{ collection.name }}</h2>
@@ -41,30 +42,21 @@
 
 
                         <div class="row mb-4">
-                            <div class="col-sm-6">
-                                <h2 class="posts-entry-title">Last added items</h2>
-                            </div>
-                            <div class="col-sm-6 text-sm-end"><a href="category.html" class="read-more">View All</a>
+                            <div class="col-sm-6" style="width: 100%">
+                                <h2 class="posts-entry-title">{{ 'lastAddItems'|trans }}</h2>
                             </div>
                         </div>
 
                         <div class="row">
                             {% for item in items %}
-
-{#                                                        {{ dump(item) }}#}
                                 <div class="col-lg-4 mb-4">
-                                    <div class="post-entry-alt">
-{#                                        <a href="{{ path('app_item', {'id': item.id}) }}"#}
-{#                                           class="img-link"><img#}
-{#                                                src="https://s0.rbk.ru/v6_top_pics/media/img/9/81/346990059783819.webp"#}
-{#                                                alt="Image"#}
-{#                                                class="img-fluid"></a>#}
+                                    <div class="post-entry-alt" style="height: 17em; position: relative;">
                                         <div class="excerpt">
                                             <h2>
                                                 <a href="{{ path('app_item', {'id': item.id}) }}">{{ item.name  }}</a>
                                             </h2>
                                             <h4></h4>
-                                            <p>Collection: {{ item.itemCollection.name }}</p>
+                                            <p>{{ 'collection'|trans }}: {{ item.itemCollection.name }}</p>
                                             {% if item.tags is not empty %}
                                                 <p>Tags:
                                                     {% for tag in item.tags %}
@@ -90,7 +82,7 @@
                     </div>
                     <div class="col-md-12 col-lg-4 sidebar">
                         <div class="sidebar-box">
-                            <h3 class="heading">Tags</h3>
+                            <h3 class="heading">{{ 'tags'|trans }}</h3>
                             <ul class="tags">
                                 {% for tag in tags %}
                                 <li><a href="#">{{ tag.name }}</a></li>
@@ -102,4 +94,6 @@
             </div>
         </section>
     </div>
+    <script type="application/javascript" src="{{ asset('js/translationButton.js') }}"></script>
+
 {% endblock %}
