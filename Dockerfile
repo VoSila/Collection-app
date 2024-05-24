@@ -1,6 +1,13 @@
 FROM webdevops/php-nginx-dev:8.2-alpine
 
-RUN apk --no-cache add mariadb-client
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libicu-dev \
+    libpq-dev \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install intl pdo pdo_mysql zip opcache \
 
 WORKDIR /app
 COPY . /app
