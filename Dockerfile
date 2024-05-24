@@ -1,5 +1,7 @@
 FROM webdevops/php-nginx-dev:8.2-alpine
 
+RUN apk --no-cache add mariadb-client
+
 WORKDIR /app
 COPY . /app
 
