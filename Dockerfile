@@ -1,5 +1,7 @@
 FROM webdevops/php-nginx-dev:8.2-alpine
 
+WORKDIR /app
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	acl \
 	file \
@@ -21,8 +23,6 @@ RUN set -eux; \
         pdo_mysql \
 	;
 
-
-WORKDIR /app
 COPY . /app
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
