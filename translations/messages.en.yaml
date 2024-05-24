@@ -24,6 +24,7 @@ createNewItem: "Create new item"
 delete: "Delete"
 show: "Show"
 edit: "Edit"
+author: "Author"
 
 #loginForm
 login: "Log in"

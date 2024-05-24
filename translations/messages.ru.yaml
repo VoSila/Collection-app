@@ -24,6 +24,7 @@ createNewItem: "Создать новый предмет"
 delete: "Удалить"
 show: "Показать"
 edit: "Редактировать"
+author: "Автор"
 
 #loginForm
 login: "Авторирация"

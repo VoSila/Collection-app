@@ -13,11 +13,11 @@
  */
 return [
     'app' => [
-        'path' => './assets/app.js',
+        'path' => './assets/app-dark.js',
         'entrypoint' => true,
     ],
     'app2' => [
-        'path' => './assets/app2.js',
+        'path' => './assets/app-light.js',
         'entrypoint' => true,
     ],
 

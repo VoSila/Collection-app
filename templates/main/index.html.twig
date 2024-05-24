@@ -5,10 +5,10 @@
 {% block body %}
     {% block header %}{% endblock %}
     <div>
-        <a href="{{ path('app_switch_theme', {'theme': 'app-dark'}) }}">Light Theme</a>
-        <a href="{{ path('app_switch_theme', {'theme': 'app-light'}) }}">Dark Theme</a>
+{#        <a href="{{ path('app_switch_theme', {'theme': 'app-dark'}) }}">Light Theme</a>#}
+{#        <a href="{{ path('app_switch_theme', {'theme': 'app-light'}) }}">Dark Theme</a>#}
 
-        <section class="section bg-light">
+        <section class="section-head">
             <div class="container">
                 <div class="row mb-4">
                     <div class="col-sm-6">
@@ -34,13 +34,10 @@
                 </div>
             </div>
         </section>
-        <section class="section">
+        <section class="section-foot">
             <div class="container">
-
                 <div class="row blog-entries element-animate">
                     <div class="col-md-12 col-lg-8 main-content">
-
-
                         <div class="row mb-4">
                             <div class="col-sm-6" style="width: 100%">
                                 <h2 class="posts-entry-title">{{ 'lastAddItems'|trans }}</h2>

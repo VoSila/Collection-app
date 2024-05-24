@@ -76,7 +76,7 @@
             "ref": "6c28c471640cc2c6e60812ebcb961c526ef8997f"
         },
         "files": [
-            "./assets/app.js",
+            "./assets/app-dark.js",
             "./assets/styles/app.css",
             "./config/packages/asset_mapper.yaml",
             "./importmap.php"

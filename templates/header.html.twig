@@ -1,54 +1,49 @@
 <nav class="site-nav">
     <div class="container">
         <div class="menu-bg-wrap">
-            <div class="site-navigation">
-                <div class="row g-0 align-items-center">
-                    <div class="col-2">
-                        <a href="{{ path('app_main') }}" class="logo m-0 float-start">Collections<span
-                                class="text-primary">.</span></a>
-                    </div>
-                    <div class="col-6 text-center">
-                        <form action="#" class="search-form d-inline-block d-lg-none">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <span class="bi-search"></span>
-                        </form>
-
-                        <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                            <li><a href="#">{{ 'home'|trans }}</a></li>
-                            <li><a href="{{ path('app_collection') }}">{{ 'collections'|trans }}</a></li>
-                            <li><a href="{{ path('app_item') }}">{{ 'items'|trans }}</a></li>
+            <div class="site-navigation d-flex align-items-center justify-content-between">
+                <div class="logo">
+                    <a href="{{ path('app_main') }}" class="logo m-0 float-start">Collections<span class="text-primary">.</span></a>
+                </div>
+                <div class="navigation-center d-none d-lg-flex align-items-center">
+                    <ul class="js-clone-nav site-menu mx-auto">
+                        <li><a href="#">{{ 'home'|trans }}</a></li>
+                        <li><a href="{{ path('app_collection') }}">{{ 'collections'|trans }}</a></li>
+                        {% if app.user %}
+                            <li><a href="{{ path('app_logout') }}">{{ 'signOut'|trans }}</a></li>
+                        {% else %}
                             <li><a href="{{ path('app_login') }}">{{ 'signIn'|trans }}</a></li>
-                            {% if app.user %}
-                                <li><a href="{{ path('app_logout') }}">{{ 'signOut'|trans }}</a></li>
-                            {% else %}
-                                <li><a href="{{ path('app_register') }}">{{ 'signUp'|trans }}</a></li>
-                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="lang-switch me-3">
+                        <span class="lang-label">EN</span>
+                        <div class="form-check form-switch d-inline-block">
+                            <input class="form-check-input" type="checkbox" id="languageSwitch" data-toggle="language">
+                        </div>
+                        <span class="lang-label">RU</span>
+                    </div>
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-lightbulb"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('app_switch_theme', {'theme': 'app-light'}) }}"> Dark Theme</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_switch_theme', {'theme': 'app-dark'}) }}"> Light Theme</a></li>
                         </ul>
                     </div>
-                    <div class="col-2  container ">
-                        <div class="lang-switch">
-                            <span class="lang-label">EN</span>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="languageSwitch" data-toggle="language">
-                            </div>
-                            <span class="lang-label">RU</span>
-                        </div>
-                    </div>
-                    <div class="col-2 text-end">
-                        <a href="#"
-                           class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
-                            <span></span>
-                        </a>
-                        <form action="#" class="search-form d-none d-lg-inline-block">
-                            <input type="text" class="form-control" placeholder="{{ 'search'|trans }}...">
-                            <span class="bi-search"></span>
-                        </form>
-                    </div>
+                </div>
+                <div class="burger d-lg-none ms-auto">
+                    <a href="#" class="site-menu-toggle js-menu-toggle">
+                        <span></span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </nav>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const savedLocale = localStorage.getItem('locale');
@@ -67,4 +62,3 @@
         });
     });
 </script>
-</header>
