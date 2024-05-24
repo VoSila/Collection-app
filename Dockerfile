@@ -1,13 +1,26 @@
 FROM webdevops/php-nginx-dev:8.2-alpine
 
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libicu-dev \
-    libpq-dev \
-    libzip-dev \
-    zip \
-    && docker-php-ext-install intl pdo pdo_mysql zip opcache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	acl \
+	file \
+	gettext \
+	git \
+	&& rm -rf /var/lib/apt/lists/*
+
+RUN set -eux; \
+	install-php-extensions \
+		@composer \
+		apcu \
+		intl \
+		opcache \
+		zip \
+		sockets \
+        amqp \
+        pdo \
+        mysqli \
+        pdo_mysql \
+	;
+
 
 WORKDIR /app
 COPY . /app
