@@ -3,11 +3,3 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-    
-app_switch_locale:
-    path: /switch-locale/{_locale}
-    controller: App\Controller\LocaleController::switchLocale
-
-app_theme_switch:
-    path: /switch-theme/{theme}
-    controller: App\Controller\ThemeController::switchTheme

@@ -14,12 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
     {
     }
 
-    #[Route('/autocomplete/tags', name: 'autocomplete_tags')]
+    #[Route('/autocomplete/tags', name: 'app_autocomplete_tags')]
     public function getTags(Request $request): JsonResponse
     {
         $searchTerm = $request->query->get('query');
-        $results = $this->tagService->getTags($searchTerm);
+        $tags = $this->tagService->getTags($searchTerm);
 
-        return new JsonResponse($results);
+        return new JsonResponse($tags);
     }
 }

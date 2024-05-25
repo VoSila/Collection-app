@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container" style="margin-top: 50px;">
-        <h1>{{ action|capitalize }} Item</h1>
+        <h1 style="margin-left: 1.2em">{{ action|capitalize }} Item</h1>
 
         {{ form_start(form, {'attr': {'class': 'p-5 bg-light'}}) }}
 
@@ -14,7 +14,6 @@
 
         <div class="mb-3">
             <div id="customItemAttributeValues">
-                {# Выводим поля формы, за исключением некоторых #}
                 {% for field in form %}
                     {% if field.vars.name not in ['_token', 'name', 'tags'] %}
                         {{ form_row(field) }}
@@ -24,11 +23,15 @@
         </div>
 
         <div class="mb-3">
-            <label for="tags" class="form-label">{{ form_label(form.tags) }}</label>
+            <label for="tags" class="form-label" >{{ form_label(form.tags) }}</label>
             {{ form_widget(form.tags, {'attr': {'class': 'form-control', 'id': 'tagsInput'}}) }}
         </div>
 
         <button type="submit" class="btn btn-primary">{{ action|capitalize }}</button>
         {{ form_end(form) }}
     </div>
+
+    <script>
+
+    </script>
 {% endblock %}

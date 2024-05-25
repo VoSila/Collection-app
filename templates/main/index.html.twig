@@ -5,9 +5,6 @@
 {% block body %}
     {% block header %}{% endblock %}
     <div>
-{#        <a href="{{ path('app_switch_theme', {'theme': 'app-dark'}) }}">Light Theme</a>#}
-{#        <a href="{{ path('app_switch_theme', {'theme': 'app-light'}) }}">Dark Theme</a>#}
-
         <section class="section-head">
             <div class="container">
                 <div class="row mb-4">
@@ -18,18 +15,26 @@
                 <div class="row align-items-stretch retro-layout">
                     {% for collection in collections %}
                         <div class="col-md-4">
-                                <a href="{{ path('app_collection', {'id': collection.id}) }}"
-                                   class="h-entry mb-30 v-height gradient">
-                                    <div class="featured-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa--UQzH26ZTgWAh0rcUBRn6_G0jhHmaUPoQ0W7AqSgOEkcFzvdZbiTIwZ43CRtX7oE-E&usqp=CAU');"></div>
-                                    <div class="text_category with-overlay-top">
-                                        <h6 style="color: white"> {{ 'category'|trans }} - {{ collection.category.name }}</h6>
-                                    </div>
-                                    <div class="text">
-                                        <h2>{{ collection.name }}</h2>
-                                        <span> {{ collection.user.email }} &nbsp;-&nbsp; {{ collection.createdAt ? collection.createdAt.format('F j, Y') : '' }}</span>
-                                    </div>
-                                </a>
-                            </div>
+                            <a href="{{ path('app_collection', {'id': collection.id}) }}"
+                               class="h-entry mb-30 v-height gradient">
+                                <div class="featured-img" style="background-image: url(
+                                {% if collection.imagePath != null %}
+                                    {{ collection.imagePath }}
+                                {% else %}
+                                    'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg'
+                                {% endif %}
+                                    );">
+                                </div>
+                                <div class="text_category with-overlay-top">
+                                    <h6 style="color: white"> {{ 'category'|trans }}
+                                        - {{ collection.category.name }}</h6>
+                                </div>
+                                <div class="text">
+                                    <h2>{{ collection.name }}</h2>
+                                    <span> {{ collection.user.email }} &nbsp;-&nbsp; {{ collection.createdAt ? collection.createdAt.format('F j, Y') : '' }}</span>
+                                </div>
+                            </a>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
@@ -50,12 +55,12 @@
                                     <div class="post-entry-alt" style="height: 17em; position: relative;">
                                         <div class="excerpt">
                                             <h2>
-                                                <a href="{{ path('app_item', {'id': item.id}) }}">{{ item.name  }}</a>
+                                                <a href="{{ path('app_item', {'id': item.id}) }}">{{ item.name }}</a>
                                             </h2>
                                             <h4></h4>
                                             <p>{{ 'collection'|trans }}: {{ item.itemCollection.name }}</p>
                                             {% if item.tags is not empty %}
-                                                <p>Tags:
+                                                <p>{{ 'tags'|trans }}:
                                                     {% for tag in item.tags %}
                                                         {{ tag.name }}{% if not loop.last %}, {% endif %}
                                                     {% endfor %}
@@ -82,7 +87,7 @@
                             <h3 class="heading">{{ 'tags'|trans }}</h3>
                             <ul class="tags">
                                 {% for tag in tags %}
-                                <li><a href="#">{{ tag.name }}</a></li>
+                                    <li><a href="#">{{ tag.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>

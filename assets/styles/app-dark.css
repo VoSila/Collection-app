@@ -607,6 +607,16 @@ color: white}
     vertical-align: top;
     border-color: #000000; }
 
+.table  a {
+    color: #ffffff
+}
+
+.table td a {
+    color: #e6e6e6}
+
+.table td li a {
+    color: black}
+
 .lang-switch {
     display: flex;
     align-items: center;
@@ -1045,3 +1055,29 @@ color: white}
 .dropdown-menu .delete:hover{
     color: #ed1e1e;
 }
+
+.btn-toggle {
+    font-weight: 600;
+    color: #f3f3f3;
+}
+
+.btn-toggle:hover,
+.btn-toggle:focus {
+    color: #000;
+    background-color: #e9ecef;
+}
+
+.btn-toggle-nav a {
+    color: #efefef;
+    text-decoration: none;
+}
+
+.btn-toggle-nav a:hover,
+.btn-toggle-nav a:focus {
+    color: #c6c6c6;
+}
+
+.collapse.show-no-delay {
+    transition: none;
+}
+

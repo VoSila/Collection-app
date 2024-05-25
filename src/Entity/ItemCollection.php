@@ -30,7 +30,7 @@ class ItemCollection
     #[Assert\Valid()]
     private ?CollectionCategory $category = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1024, nullable: true)]
     private ?string $imagePath = null;
 
     #[ORM\ManyToOne]

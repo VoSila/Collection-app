@@ -17,9 +17,9 @@ class TagService
 
         $results = [];
         foreach ($tags as $tag) {
-            $results[] = [
-                'id' => $tag->getId(),
-                'name' => $tag->getName(),
+            $results["results"][] = [
+                "value" => $tag->getId(),
+                "text" => $tag->getName(),
             ];
         }
 

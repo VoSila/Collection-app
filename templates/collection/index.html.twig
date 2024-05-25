@@ -5,7 +5,8 @@
 {% block body %}
     <div class="col-auto d-flex justify-content-between">
         {% include 'sidebar.html.twig' %}
-        <div class="container" style="margin-top: 50px; padding: 100px">
+
+        <div class="container" style="margin-top: 50px; padding: 30px 100px 30px 20px">
             <div class="col-auto d-flex justify-content-between">
                 <a id="block_button_create" href="{{ path('app_collection_create') }}" type="button"
                    class="btn btn-outline-success" style="margin: 10px 0 10px 0">
@@ -67,7 +68,7 @@
                             </th>
 
                             <th>
-{#                                {% set params = queryParams|merge({ sort: 'name', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}#}
+                                {#                                {% set params = queryParams|merge({ sort: 'name', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %} #}
                                 {% if sort == 'name' %}
                                     {% if direction == 'ASC' %}
                                         <a href="{{ path('app_collection', params) }}">{{ 'author'|trans }} ↓</a>
@@ -96,29 +97,37 @@
                         <tbody>
                         {% for collection in pagination %}
                             <tr>
-                                <td><input class="checkbox" tabindex="-1" type="checkbox"
+                                <td><input class="PrivateSwitchBase-input css-1m9pwf3 thing" tabindex="-1"
+                                           type="checkbox"
                                            data-indeterminate="false" aria-label="Select all rows"
                                            data-collection-id="{{ collection.id }}">
                                 </td>
                                 <td>{{ collection.id }}</td>
-                                <td>{{ collection.name }}</td>
+                                <td><a href="{{ path('app_collection_show', {'id': collection.id}) }}">{{ collection.name }}</a></td>
                                 <td>{{ collection.category.name }}</td>
                                 <td>{{ collection.user.email }}</td>
                                 <td>{{ collection.createdAt ? collection.createdAt.format('Y-m-d H:i:s') : '' }}</td>
 
                                 <td class="d-flex justify-content-end">
                                     <div class="dropdown">
-                                        <a class="button_table" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path>
-                                                <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path>
+                                        <a class="button_table" role="button" id="dropdownMenuLink"
+                                           data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor" class="bi bi-chevron-double-down"
+                                                 viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path>
+                                                <path fill-rule="evenodd"
+                                                      d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path>
                                             </svg>
                                         </a>
                                         <ul class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                                             <li><a class="dropdown-item show"
-                                                   href="{{ path('app_collection_show', {'id': collection.id}) }}">Show</a></li>
+                                                   href="{{ path('app_collection_show', {'id': collection.id}) }}">{{ 'show'|trans }}</a>
+                                            </li>
                                             <li><a class="dropdown-item edit"
-                                                   href="{{ path('app_collection_edit', {'id': collection.id}) }}">Edit</a></li>
+                                                   href="{{ path('app_collection_edit', {'id': collection.id}) }}">{{ 'edit'|trans }}</a>
+                                            </li>
                                             <li>
                                                 <form id="deleteForm" method="post"
                                                       action="{{ path('app_collection_delete', {'id': collection.id}) }}">
@@ -126,7 +135,7 @@
                                                            value="{{ csrf_token('delete' ~ collection.id) }}">
                                                     <button id="deleteButton"
                                                             class="dropdown-item delete">
-                                                        Delete
+                                                        {{ 'delete'|trans }}
                                                     </button>
                                                 </form>
                                             </li>
@@ -148,4 +157,41 @@
             </div>
         </div>
     </div>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('block_button_delete').addEventListener('click', function () {
+                var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                var selectedCollectionIds = [];
+
+                checkboxes.forEach(function (checkbox) {
+                    selectedCollectionIds.push(checkbox.dataset.collectionId);
+                });
+
+                if (selectedCollectionIds.length === 0) {
+                    alert('Please select at least one collection to delete.');
+                    return;
+                }
+
+                selectedCollectionIds.forEach(function (collectionId) {
+                    console.log(collectionId);
+
+                    var form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/collections/' + collectionId + '/delete';
+
+                    var csrfTokenInput = document.createElement('input');
+                    csrfTokenInput.type = 'hidden';
+                    csrfTokenInput.name = '_token';
+                    csrfTokenInput.value = '{{ csrf_token('delete' ~ 6) }}';
+
+                    form.appendChild(csrfTokenInput);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            });
+        });
+
+    </script>
 {% endblock %}

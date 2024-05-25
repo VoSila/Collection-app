@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ItemCollection;
 use App\Form\CollectionType;
 use App\Service\CollectionService;
+use App\Service\ItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ class CollectionController extends AbstractController
 {
     public function __construct(
         private readonly CollectionService $collectionService,
+        private readonly ItemService $itemService,
         private readonly EntityManagerInterface $entityManager
     )
     {
@@ -44,7 +46,11 @@ class CollectionController extends AbstractController
     #[IsGranted('view', 'collection', 'Collection not found', 404)]
     public function show(Request $request, ItemCollection $collection, $id): Response
     {
-        $items = $this->collectionService->getItemsForShow($id);
+//        dd($request->query);
+        $sortField = $request->query->get('sort', 'id');
+        $sortDirection = $request->query->get('direction', 'DESC');
+
+        $items = $this->itemService->getItemsForShow($id,$sortField, $sortDirection);
         $collection = $this->collectionService->getCollectionsForShow($id);
         $customItems = $this->collectionService->getCustomItemsForShow($id);
         $pagination = $this->collectionService->getPagination($items, $request->query->getInt('page', 1));
@@ -53,6 +59,7 @@ class CollectionController extends AbstractController
             'pagination' => $pagination,
             'collection' => $collection,
             'customItems' => $customItems,
+            'queryParams' => $request->query->all(),
         ]);
 
     }

@@ -1,35 +1,41 @@
 #main
-hello: "Привет"
-welcome: "Добро пожаловать"
-collection: "Коллекция"
-category: "Категория"
-tags: "Тэги"
-popularCollection: "Популярные коллекции"
-lastAddItems: "Последние добавленные предметы"
+hello: 'Привет'
+welcome: 'Добро пожаловать'
+collection: 'Коллекция'
+category: 'Категория'
+tags: 'Тэги'
+popularCollection: 'Популярные коллекции'
+lastAddItems: 'Последние добавленные предметы'
 
 #header
-home: "Главная"
-collections: "Коллекции"
-items: "Предметы"
-signIn: "Войти"
-signOut: "Выйти"
-signUp: "Регистрация"
-search: "Поиск"
+home: 'Главная'
+collections: 'Коллекции'
+items: 'Предметы'
+signIn: 'Войти'
+signOut: 'Выйти'
+signUp: 'Регистрация'
+search: 'Поиск'
 
 #collections
-name: "Название"
-dateCreated: "Дата создания"
-createNewCollection: "Создать новую коллекцию"
-createNewItem: "Создать новый предмет"
-delete: "Удалить"
-show: "Показать"
-edit: "Редактировать"
-author: "Автор"
+name: 'Название'
+dateCreated: 'Дата создания'
+createNewCollection: 'Создать новую коллекцию'
+createNewItem: 'Создать новый предмет'
+delete: 'Удалить'
+show: 'Показать'
+edit: 'Редактировать'
+author: 'Автор'
 
 #loginForm
-login: "Авторирация"
-registration: "Регистрация"
-password: "Пароль"
-rememberMe: "Запомнить меня"
-agreeTerms: "Согласен с условиями"
+login: 'Авторирация'
+registration: 'Регистрация'
+password: 'Пароль'
+rememberMe: 'Запомнить меня'
+agreeTerms: 'Согласен с условиями'
+
+All: 'Все'
+Animals: 'Животные'
+Cars: 'Машины'
+Games: 'Игры'
+Other: 'Другое'
 

@@ -1,12 +1,12 @@
-<div class="flex-shrink-0 p-3 bg-white" style="width: 140px;">
-    <ul class="list-unstyled ps-0" style="margin-top: 4em">
-        <li class="mb-1">
+<div class="col-4 flex-shrink-0 p-3 sidebar" style="width: auto;">
+    <ul class="list-unstyled ps-0" style="margin-top: 10em;">
+        <li class="mb-1" style="padding-left: 20px;">
             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
                 {{ 'category'|trans }}
             </button>
-            <div class="collapse" id="home-collapse" style="">
+            <div class="collapse show-no-delay" id="home-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    {{ knp_menu_render(knp_menu_get('sidebar')) }}
+                    {{ knp_menu_render('sidebar', {'currentClass': 'active', 'ancestorClass': 'active'}) }}
                 </ul>
             </div>
         </li>

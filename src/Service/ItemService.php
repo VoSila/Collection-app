@@ -122,4 +122,18 @@ readonly class ItemService
         return $this->itemCollectionRepository->getItemCollectionWithCustomAttributes($itemId);
     }
 
+    public function getCriteriaBySorting(?string $item): array|null
+    {
+        $criteria = [];
+        if ($item !== null) {
+            $criteria['item'] = $item;
+        }
+
+        return $criteria;
+    }
+
+    public function getItemsForShow(int $collectionId, string $sortField, string $sortDirection): array
+    {
+        return $this->entityManager->getRepository(Item::class)->findBy(['itemCollection' => $collectionId], [$sortField => $sortDirection]);
+    }
 }

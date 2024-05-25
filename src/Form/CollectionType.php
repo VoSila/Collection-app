@@ -24,6 +24,7 @@ class CollectionType extends AbstractType
             ])
             ->add('imagePath', FileType::class, [
                 'label' => 'Image (JPEG/PNG file)',
+                'mapped' => false,
                 'required' => false
             ])
             ->add('customItemAttributes', BaseCollectionType::class, [

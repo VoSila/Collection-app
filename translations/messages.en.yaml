@@ -1,35 +1,41 @@
 #main
-hello: "Hellos"
-welcome: "Welcome"
-collection: "Collection"
-category: "Category"
-tags: "Tags"
-popularCollection: "Popular collection"
-lastAddItems: "Last added items"
+hello: 'Hellos'
+welcome: 'Welcome'
+collection: 'Collection'
+category: 'Category'
+tags: 'Tags'
+popularCollection: 'Popular collection'
+lastAddItems: 'Last added items'
 
 #header
-home: "Home"
-collections: "Collections"
-items: "Items"
-signIn: "Sign in"
-signOut: "Sign out"
-signUp: "Sign up"
-search: "Search"
+home: 'Home'
+collections: 'Collections'
+items: 'Items'
+signIn: 'Sign in'
+signOut: 'Sign out'
+signUp: 'Sign up'
+search: 'Search'
 
 #collections
-name: "Name"
-dateCreated: "Data created"
-createNewCollection: "Create new collection"
-createNewItem: "Create new item"
-delete: "Delete"
-show: "Show"
-edit: "Edit"
-author: "Author"
+name: 'Name'
+dateCreated: 'Data created'
+createNewCollection: 'Create new collection'
+createNewItem: 'Create new item'
+delete: 'Delete'
+show: 'Show'
+edit: 'Edit'
+author: 'Author'
 
 #loginForm
-login: "Log in"
-registration: "Registration"
-password: "Password"
-rememberMe: "Remember me"
-agreeTerms: "Agree terms"
+login: 'Log in'
+registration: 'Registration'
+password: 'Password'
+rememberMe: 'Remember me'
+agreeTerms: 'Agree terms'
+
+All: 'All'
+Animals: 'Animals'
+Cars: 'Cars'
+Games: 'Games'
+Other: 'Other'
 

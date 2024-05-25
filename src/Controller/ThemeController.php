@@ -14,8 +14,8 @@ class ThemeController extends AbstractController
 
     public function switchTheme(Request $request, $theme): RedirectResponse
     {
-        if (!in_array($theme, ['app-dark', 'app-light'])) {
-            throw $this->createNotFoundException('Тема не найдена');
+        if (!in_array($theme, ['app-light', 'app-dark'])) {
+            throw $this->createNotFoundException('Theme not found');
         }
 
         $session = $request->getSession();

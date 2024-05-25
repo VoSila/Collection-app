@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Entity\CustomItemAttribute;
-use App\Entity\Item;
 use App\Entity\ItemCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -11,7 +10,10 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 readonly class CollectionService
 {
@@ -19,7 +21,10 @@ readonly class CollectionService
         private EntityManagerInterface $entityManager,
         private FormFactoryInterface   $formFactory,
         private PaginatorInterface     $paginator,
-        private Security               $security
+        private Security               $security,
+        private SluggerInterface       $slugger,
+        private YandexDiskService      $yandexDiskService,
+        private string                 $targetDirectory,
     )
     {
     }
@@ -31,6 +36,7 @@ readonly class CollectionService
         $this->handleForm($form, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->getImage($form, $collection);
             $this->saveCollection($collection);
             return [
                 'success' => true,
@@ -51,6 +57,7 @@ readonly class CollectionService
         $this->handleForm($form, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->getImage($form, $collection);
             $this->saveEditedCollection();
             return [
                 'success' => true,
@@ -63,6 +70,39 @@ readonly class CollectionService
             'success' => false,
             'form' => $form
         ];
+    }
+
+    public function getImage(mixed $form, ItemCollection $collection): void
+    {
+        $imageFile = $form->get('imagePath')->getData();
+        if ($imageFile) {
+            $imageFileName = $this->upload($imageFile);
+
+            $pathImage = $this->getTargetDirectory() . '/' . $imageFileName;
+            $filePath = $this->yandexDiskService->uploadFile($pathImage);
+
+            $collection->setImagePath($filePath);
+        }
+    }
+
+    public function upload(UploadedFile $file): string
+    {
+        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $this->slugger->slug($originalFilename);
+        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
+
+        try {
+            $file->move($this->getTargetDirectory(), $fileName);
+        } catch (FileException $e) {
+            // ... handle exception if something happens during file upload
+        }
+
+        return $fileName;
+    }
+
+    public function getTargetDirectory(): string
+    {
+        return $this->targetDirectory;
     }
 
     public function saveCollection(ItemCollection $collection): void
@@ -115,11 +155,6 @@ readonly class CollectionService
     public function getCollectionsForShow(int $collectionId): ItemCollection
     {
         return $this->entityManager->getRepository(ItemCollection::class)->find($collectionId);
-    }
-
-    public function getItemsForShow(int $collectionId): array
-    {
-        return $this->entityManager->getRepository(Item::class)->findBy(['itemCollection' => $collectionId]);
     }
 
     public function getCustomItemsForShow(int $collectionId): array

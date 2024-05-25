@@ -12,15 +12,14 @@
  * The "importmap:require" command can be used to add new entries to this file.
  */
 return [
-    'app' => [
-        'path' => './assets/app-dark.js',
-        'entrypoint' => true,
-    ],
-    'app2' => [
+    'app-light' => [
         'path' => './assets/app-light.js',
         'entrypoint' => true,
     ],
-
+    'app-dark' => [
+        'path' => './assets/app-dark.js',
+        'entrypoint' => true,
+    ],
     'bootstrap' => [
         'version' => '5.3.3',
     ],
