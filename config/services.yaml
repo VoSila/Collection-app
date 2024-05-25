@@ -25,7 +25,6 @@ services:
         class: App\Service\YandexDiskService
         arguments:
             - '%env(YANDEX_DISK_TOKEN)%'
-            - '%env(YANDEX_DISK_DIRECTORY)%'
 
     App\Service\CollectionService:
         arguments:

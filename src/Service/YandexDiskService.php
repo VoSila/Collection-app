@@ -18,6 +18,7 @@ class YandexDiskService
 
     public function uploadFile(string $pathImage)
     {
+        dd($pathImage);
         $fileName = $this->getFileName($pathImage);
         $resource = $this->disk->getResource($fileName);
         $resource->upload($pathImage);
