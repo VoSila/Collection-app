@@ -21,9 +21,7 @@ class YandexDiskService
         $resource = $this->disk->getResource($imageFileName);
         $resource->upload($imageFile);
 
-//        dd($resource);
         $response = $resource->toArray();
-//        dd($response);
 
         return $response['file'];
     }

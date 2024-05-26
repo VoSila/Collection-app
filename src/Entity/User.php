@@ -19,7 +19,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[ORM\Column(length: 100)]
+    private ?string $name = null;
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -29,10 +30,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-//    #[ORM\Column(type: 'smallint', enumType: UserStatus::class)]
-//    #[Assert\NotNull()]
-//    #[Assert\Type(type: UserStatus::class)]
-//    private ?UserStatus $status = null;
+    #[ORM\Column(type: 'smallint', enumType: UserStatus::class)]
+    #[Assert\NotNull()]
+    #[Assert\Type(type: UserStatus::class)]
+    private ?UserStatus $status = null;
 
     /**
      * @var string The hashed password
@@ -40,9 +41,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    public function __construct()
+    {
+        $this->status = UserStatus::Active;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 
     public function getEmail(): ?string
@@ -106,17 +122,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-//    public function getStatus(): ?UserStatus
-//    {
-//        return $this->status;
-//    }
-//
-//    public function setStatus(?UserStatus $status): static
-//    {
-//        $this->status = $status;
-//
-//        return $this;
-//    }
+    public function getStatus(): ?UserStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?UserStatus $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
 
     /**
      * @see UserInterface

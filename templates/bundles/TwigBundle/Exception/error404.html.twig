@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="error-page">
+        <h1>PAGE NOT FOUND</h1>
+        <h1>404</h1>
+        <p>
+            Check that you typed the address correctly
+            <a href="{{ path('app_main') }}"> Go back to home page</a>
+        </p>
+    </section>
+{% endblock %}

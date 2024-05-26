@@ -18,6 +18,7 @@ search: 'Поиск'
 
 #collections
 name: 'Название'
+nameRegister: 'Имя'
 dateCreated: 'Дата создания'
 createNewCollection: 'Создать новую коллекцию'
 createNewItem: 'Создать новый предмет'

@@ -16,12 +16,17 @@
                     {{ form_start(registrationForm) }}
                     {{ form_row(registrationForm._token) }}
                     <div class="form-group">
+                        {{ form_row(registrationForm.name, {'attr': {'class': 'form-control', 'placeholder': 'nameRegister'|trans}}) }}
+                    </div>
+                    <div class="form-group">
                         {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
                     </div>
                     <div class="form-group">
                         {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder':  'password'|trans }}) }}
                     </div>
+                    <div class="form-group">
                     {{ form_row(registrationForm.agreeTerms) }}
+                    </div>
                     <button type="submit" class="btn btn-primary">{{ 'signUp'|trans }}</button>
                 </form>
             </div>

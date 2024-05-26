@@ -54,10 +54,10 @@ class CollectionVoter extends Voter
         if ($this->canEdit($collection, $user ) && $this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
-        return true;
+//        return true;
 
-//        dd($collection);
-//        return !$collection->isPrivate();
+        dd($collection);
+        return !$collection->isPrivate();
     }
 
     private function canEdit(ItemCollection $collection, User $user): bool

@@ -6,7 +6,6 @@ enum UserStatus: int
 {
     use EnumToArrayTrait;
 
-    case AwaitingActivation = 1;
-    case Active = 2;
-    case Blocked = 3;
+    case Active = 1;
+    case Blocked = 2;
 }

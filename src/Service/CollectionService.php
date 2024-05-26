@@ -10,7 +10,9 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 readonly class CollectionService
 {
@@ -19,8 +21,8 @@ readonly class CollectionService
         private FormFactoryInterface   $formFactory,
         private PaginatorInterface     $paginator,
         private Security               $security,
+        private SluggerInterface       $slugger,
         private YandexDiskService      $yandexDiskService,
-
     )
     {
     }
@@ -73,11 +75,18 @@ readonly class CollectionService
         $imageFile = $form->get('imagePath')->getData();
 
         if ($imageFile) {
-            $imageFileName = $imageFile->getClientOriginalName();
+            $imageFileName = $this->getUniqFileName($imageFile);
             $filePath = $this->yandexDiskService->uploadFile($imageFile, $imageFileName);
 
             $collection->setImagePath($filePath);
         }
+    }
+
+    public function getUniqFileName(UploadedFile $file): string
+    {
+        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $this->slugger->slug($originalFilename);
+        return $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
     }
 
     public function saveCollection(ItemCollection $collection): void
