@@ -68,8 +68,8 @@
                             </th>
 
                             <th>
-                                {#                                {% set params = queryParams|merge({ sort: 'name', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %} #}
-                                {% if sort == 'name' %}
+                                {% set params = queryParams|merge({ sort: 'author', direction: direction == 'ASC' ? 'DESC' : 'ASC' }) %}
+                                {% if sort == 'author' %}
                                     {% if direction == 'ASC' %}
                                         <a href="{{ path('app_collection', params) }}">{{ 'author'|trans }} ↓</a>
                                     {% else %}
@@ -129,7 +129,7 @@
                                                    href="{{ path('app_collection_edit', {'id': collection.id}) }}">{{ 'edit'|trans }}</a>
                                             </li>
                                             <li>
-                                                <form id="deleteForm" method="post"
+                                                <form id="deleteForm-{{ collection.id }}" method="post"
                                                       action="{{ path('app_collection_delete', {'id': collection.id}) }}">
                                                     <input type="hidden" name="_token"
                                                            value="{{ csrf_token('delete' ~ collection.id) }}">
@@ -158,14 +158,19 @@
         </div>
     </div>
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('block_button_delete').addEventListener('click', function () {
                 var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
                 var selectedCollectionIds = [];
+                var forms = [];
 
                 checkboxes.forEach(function (checkbox) {
                     selectedCollectionIds.push(checkbox.dataset.collectionId);
+                    var form = document.getElementById('deleteForm-' + checkbox.dataset.collectionId);
+                    console.log(form);
+                    if (form) {
+                        forms.push(form);
+                    }
                 });
 
                 if (selectedCollectionIds.length === 0) {
@@ -173,25 +178,12 @@
                     return;
                 }
 
-                selectedCollectionIds.forEach(function (collectionId) {
-                    console.log(collectionId);
-
-                    var form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '/collections/' + collectionId + '/delete';
-
-                    var csrfTokenInput = document.createElement('input');
-                    csrfTokenInput.type = 'hidden';
-                    csrfTokenInput.name = '_token';
-                    csrfTokenInput.value = '{{ csrf_token('delete' ~ 6) }}';
-
-                    form.appendChild(csrfTokenInput);
-
-                    document.body.appendChild(form);
-                    form.submit();
-                });
+                if (confirm('Are you sure you want to delete selected collections?')) {
+                    forms.forEach(function (form) {
+                        form.submit();
+                    });
+                }
             });
         });
-
     </script>
 {% endblock %}

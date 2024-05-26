@@ -78,9 +78,12 @@ readonly class CollectionService
     {
         $imageFile = $form->get('imagePath')->getData();
         if ($imageFile) {
+
+            dump($imageFile);
+
             $imageFileName = $this->upload($imageFile);
 
-
+            dump($imageFileName);
 
             $filePath = $this->yandexDiskService->uploadFile($imageFileName, $this->container);
 
@@ -95,7 +98,13 @@ readonly class CollectionService
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
-            $file->move($this->getTargetDirectory(), $fileName);
+            if ($file->move($this->targetDirectory, $fileName)) {
+
+               dump($this->targetDirectory);
+
+            } else {
+                dump('Файл не сохранился ');
+            }
         } catch (FileException $e) {
             // ... handle exception if something happens during file upload
         }

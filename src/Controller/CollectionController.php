@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ItemCollection;
 use App\Form\CollectionType;
+use App\Repository\ItemCollectionRepository;
 use App\Service\CollectionService;
 use App\Service\ItemService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,8 +18,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class CollectionController extends AbstractController
 {
     public function __construct(
-        private readonly CollectionService $collectionService,
-        private readonly ItemService $itemService,
+        private readonly CollectionService      $collectionService,
+        private readonly ItemService            $itemService,
         private readonly EntityManagerInterface $entityManager
     )
     {
@@ -50,7 +51,7 @@ class CollectionController extends AbstractController
         $sortField = $request->query->get('sort', 'id');
         $sortDirection = $request->query->get('direction', 'DESC');
 
-        $items = $this->itemService->getItemsForShow($id,$sortField, $sortDirection);
+        $items = $this->itemService->getItemsForShow($id, $sortField, $sortDirection);
         $collection = $this->collectionService->getCollectionsForShow($id);
         $customItems = $this->collectionService->getCustomItemsForShow($id);
         $pagination = $this->collectionService->getPagination($items, $request->query->getInt('page', 1));
@@ -103,7 +104,6 @@ class CollectionController extends AbstractController
     #[Route('/{id}/delete', name: 'app_collection_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, ItemCollection $itemCollection,): Response
     {
-
         if ($this->isCsrfTokenValid('delete' . $itemCollection->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($itemCollection);
             $this->entityManager->flush();
