@@ -79,7 +79,7 @@ readonly class CollectionService
             $imageFileName = $this->upload($imageFile);
 
 //            $pathImage = $this->getTargetDirectory() . '/' . $imageFileName;
-                        $pathImage = '/public/uploads/images/' . $imageFileName;
+                        $pathImage = __DIR__ . '/public/uploads/images/' . $imageFileName;
 //dd($pathImage);
             $filePath = $this->yandexDiskService->uploadFile($pathImage);
 
