@@ -16,11 +16,15 @@ class YandexDiskService
         $this->disk = new Disk($this->client);
     }
 
-    public function uploadFile(string $pathImage)
+    public function uploadFile(string $imageFileName, $container)
     {
+
+        $projectDir = $container->getParameter('kernel.project_dir');
+        $pathImage = realpath($projectDir . '/public/uploads/images/' . $imageFileName);
+
         $fileName = $this->getFileName($pathImage);
         $resource = $this->disk->getResource($fileName);
-
+//dd($pathImage);
         $resource->upload($pathImage);
 
         $response = $resource->toArray();

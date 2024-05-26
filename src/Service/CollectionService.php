@@ -26,7 +26,7 @@ readonly class CollectionService
         private SluggerInterface       $slugger,
         private YandexDiskService      $yandexDiskService,
         private string                 $targetDirectory,
-        private ContainerInterface $container,
+        private ContainerInterface     $container,
     )
     {
     }
@@ -80,10 +80,9 @@ readonly class CollectionService
         if ($imageFile) {
             $imageFileName = $this->upload($imageFile);
 
-            $projectDir = $this->container->getParameter('kernel.project_dir');
-            $pathImage = realpath($projectDir . '/public/uploads/images/' . $imageFileName);
 
-            $filePath = $this->yandexDiskService->uploadFile($pathImage);
+
+            $filePath = $this->yandexDiskService->uploadFile($imageFileName, $this->container);
 
             $collection->setImagePath($filePath);
         }
