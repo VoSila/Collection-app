@@ -21,7 +21,9 @@ class YandexDiskService
         $fileName = $this->getFileName($pathImage);
         $resource = $this->disk->getResource($fileName);
 //dd($_SERVER['DOCUMENT_ROOT'] . $pathImage);
-        $resource->upload($_SERVER['DOCUMENT_ROOT'] . $pathImage);
+        $rootDir = __DIR__;
+        $fullPath = $rootDir . '/' . $pathImage;
+        $resource->upload($fullPath);
         $response = $resource->toArray();
 
         $this->deleteLocalFile($pathImage);
