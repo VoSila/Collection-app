@@ -20,21 +20,21 @@ class YandexDiskService
     {
 
         $projectDir = $container->getParameter('kernel.project_dir');
-        $pathImage = realpath($projectDir . '/public/uploads/images/' . $imageFileName);
-        $fileName = $this->getFileName($pathImage);
+//        $pathImage = realpath($projectDir . '/public/uploads/images/' . $imageFileName);
+//        $fileName = $this->getFileName($pathImage);
 
-dump($projectDir);
-dump($pathImage);
-dump($fileName);
-exit();
+//dump($projectDir);
+//dump($pathImage);
+//dump($fileName);
+//exit();
 
-        $resource = $this->disk->getResource($fileName);
-        $resource->upload($pathImage);
+        $resource = $this->disk->getResource('test.txt');
+        $resource->upload($imageFileName);
 
         $response = $resource->toArray();
 
-        $this->deleteLocalFile($pathImage);
-
+//        $this->deleteLocalFile($pathImage);
+//dd($response);
 
         return $response['file'];
     }

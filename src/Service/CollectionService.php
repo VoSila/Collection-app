@@ -79,13 +79,13 @@ readonly class CollectionService
         $imageFile = $form->get('imagePath')->getData();
         if ($imageFile) {
 
-            dump($imageFile);
+//            dump($imageFile);
 
-            $imageFileName = $this->upload($imageFile);
+//            $imageFileName = $this->upload($imageFile);
 
-            dump($imageFileName);
+//            dump($imageFileName);
 
-            $filePath = $this->yandexDiskService->uploadFile($imageFileName, $this->container);
+            $filePath = $this->yandexDiskService->uploadFile($imageFile, $this->container);
 
             $collection->setImagePath($filePath);
         }
@@ -105,7 +105,7 @@ readonly class CollectionService
                dump($this->targetDirectory);
 
             } else {
-                  dump($this->targetDirectory);
+                dump($this->targetDirectory);
             }
         } catch (FileException $e) {
             dump($e->getMessage());
