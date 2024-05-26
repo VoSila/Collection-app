@@ -21,9 +21,7 @@ class YandexDiskService
         $fileName = $this->getFileName($pathImage);
         $resource = $this->disk->getResource($fileName);
 
-        $rootDir = dirname(__FILE__);
-        $fullPath = $rootDir . '/' . $pathImage;
-        $resource->upload($fullPath);
+        $resource->upload($pathImage);
 
         $response = $resource->toArray();
 
