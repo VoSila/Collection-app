@@ -34,12 +34,7 @@ class YandexDiskService
     public function getFileName($pathImage): string
     {
         $fileInfo = pathinfo($pathImage);
-        $fileName = $fileInfo['filename'];
-
-        $fileInfo = pathinfo($pathImage);
-        $fileExtension = $fileInfo['extension'];
-
-        return $fileName . '.' . $fileExtension;
+        return  $fileInfo['basename'];
     }
 
     public function deleteLocalFile($pathImage): void
