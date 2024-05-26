@@ -98,12 +98,14 @@ readonly class CollectionService
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
+            dump($this->targetDirectory);
+
             if ($file->move($this->targetDirectory, $fileName)) {
 
                dump($this->targetDirectory);
 
             } else {
-                dump('Файл не сохранился ');
+                  dump($this->targetDirectory);
             }
         } catch (FileException $e) {
             // ... handle exception if something happens during file upload

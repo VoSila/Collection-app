@@ -25,7 +25,7 @@ class YandexDiskService
 
 dump($projectDir);
 dump($pathImage);
-        dump($fileName);
+dump($fileName);
 exit();
 
         $resource = $this->disk->getResource($fileName);
