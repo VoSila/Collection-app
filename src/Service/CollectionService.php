@@ -7,14 +7,10 @@ use App\Entity\ItemCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Psr\Container\ContainerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 readonly class CollectionService
 {
@@ -23,10 +19,8 @@ readonly class CollectionService
         private FormFactoryInterface   $formFactory,
         private PaginatorInterface     $paginator,
         private Security               $security,
-        private SluggerInterface       $slugger,
         private YandexDiskService      $yandexDiskService,
-        private string                 $targetDirectory,
-        private ContainerInterface     $container,
+
     )
     {
     }
@@ -77,46 +71,13 @@ readonly class CollectionService
     public function getImage(mixed $form, ItemCollection $collection): void
     {
         $imageFile = $form->get('imagePath')->getData();
+
         if ($imageFile) {
-
-//            dump($imageFile);
-
-//            $imageFileName = $this->upload($imageFile);
-
-//            dump($imageFileName);
-
-            $filePath = $this->yandexDiskService->uploadFile($imageFile, $this->container);
+            $imageFileName = $imageFile->getClientOriginalName();
+            $filePath = $this->yandexDiskService->uploadFile($imageFile, $imageFileName);
 
             $collection->setImagePath($filePath);
         }
-    }
-
-    public function upload(UploadedFile $file): string
-    {
-        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = $this->slugger->slug($originalFilename);
-        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
-
-        try {
-            dump($this->targetDirectory);
-
-            if ($file->move($this->targetDirectory, $fileName)) {
-
-               dump($this->targetDirectory);
-
-            } else {
-                dump($this->targetDirectory);
-            }
-        } catch (FileException $e) {
-            dump($e->getMessage());
-        }
-
-        return $fileName;
-    }
-
-    public function getTargetDirectory(): string
-    {
-        return $this->targetDirectory;
     }
 
     public function saveCollection(ItemCollection $collection): void

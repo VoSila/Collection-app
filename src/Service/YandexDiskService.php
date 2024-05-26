@@ -16,25 +16,14 @@ class YandexDiskService
         $this->disk = new Disk($this->client);
     }
 
-    public function uploadFile(string $imageFileName, $container)
+    public function uploadFile(string $imageFile, string $imageFileName)
     {
+        $resource = $this->disk->getResource($imageFileName);
+        $resource->upload($imageFile);
 
-        $projectDir = $container->getParameter('kernel.project_dir');
-//        $pathImage = realpath($projectDir . '/public/uploads/images/' . $imageFileName);
-//        $fileName = $this->getFileName($pathImage);
-
-//dump($projectDir);
-//dump($pathImage);
-//dump($fileName);
-//exit();
-
-        $resource = $this->disk->getResource('test.txt');
-        $resource->upload($imageFileName);
-
+//        dd($resource);
         $response = $resource->toArray();
-
-//        $this->deleteLocalFile($pathImage);
-//dd($response);
+//        dd($response);
 
         return $response['file'];
     }

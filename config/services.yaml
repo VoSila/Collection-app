@@ -25,12 +25,7 @@ services:
         class: App\Service\YandexDiskService
         arguments:
             - '%env(YANDEX_DISK_TOKEN)%'
-
-    App\Service\CollectionService:
-        arguments:
-            $targetDirectory: '%images_directory%'
-            $container: '@service_container'
-    
+ 
     app.menu_builder:
         class: App\Menu\MenuBuilder
         arguments: ["@knp_menu.factory"]
