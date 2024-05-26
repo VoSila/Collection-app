@@ -108,7 +108,7 @@ readonly class CollectionService
                   dump($this->targetDirectory);
             }
         } catch (FileException $e) {
-            // ... handle exception if something happens during file upload
+            dump($e->getMessage());
         }
 
         return $fileName;
