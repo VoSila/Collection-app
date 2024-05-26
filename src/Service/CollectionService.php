@@ -7,6 +7,7 @@ use App\Entity\ItemCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -25,6 +26,7 @@ readonly class CollectionService
         private SluggerInterface       $slugger,
         private YandexDiskService      $yandexDiskService,
         private string                 $targetDirectory,
+        private ContainerInterface $container,
     )
     {
     }
@@ -77,7 +79,10 @@ readonly class CollectionService
         $imageFile = $form->get('imagePath')->getData();
         if ($imageFile) {
             $imageFileName = $this->upload($imageFile);
-            $pathImage = realpath(__DIR__ . '/../../public/uploads/images/' . $imageFileName);
+
+            $projectDir = $this->container->getParameter('kernel.project_dir');
+            $pathImage = realpath($projectDir . '/public/uploads/images/' . $imageFileName);
+
             $filePath = $this->yandexDiskService->uploadFile($pathImage);
 
             $collection->setImagePath($filePath);
