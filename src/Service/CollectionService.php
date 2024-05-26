@@ -78,7 +78,9 @@ readonly class CollectionService
         if ($imageFile) {
             $imageFileName = $this->upload($imageFile);
 
-            $pathImage = $this->getTargetDirectory() . '/' . $imageFileName;
+//            $pathImage = $this->getTargetDirectory() . '/' . $imageFileName;
+                        $pathImage = '/uploads/images/' . $imageFileName;
+
             $filePath = $this->yandexDiskService->uploadFile($pathImage);
 
             $collection->setImagePath($filePath);
