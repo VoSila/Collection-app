@@ -20,10 +20,16 @@ class YandexDiskService
     {
         $fileName = $this->getFileName($pathImage);
         $resource = $this->disk->getResource($fileName);
-        $resource->upload($pathImage);
-        $response = $resource->toArray();
+        if (file_exists($pathImage)) {
 
-        $this->deleteLocalFile($pathImage);
+            $resource->upload($pathImage);
+            $response = $resource->toArray();
+
+            $this->deleteLocalFile($pathImage);
+        } else {
+            echo "Файл не существует.";
+        }
+
 
         return $response['file'];
     }
