@@ -4,18 +4,16 @@ namespace App\Security;
 
 use App\Entity\ItemCollection;
 use App\Entity\User;
-use App\Repository\UserRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use function Symfony\Component\Translation\t;
 
 class CollectionVoter extends Voter
 {
     const VIEW = 'view';
     const EDIT = 'edit';
 
-    public function __construct(private Security $security)
+    public function __construct(private readonly Security $security)
     {
     }
     protected function supports(string $attribute, mixed $subject): bool
@@ -54,10 +52,7 @@ class CollectionVoter extends Voter
         if ($this->canEdit($collection, $user ) && $this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
-//        return true;
-
-        dd($collection);
-        return !$collection->isPrivate();
+        return $user === $collection->getUser();
     }
 
     private function canEdit(ItemCollection $collection, User $user): bool

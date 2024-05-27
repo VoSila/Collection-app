@@ -16,14 +16,19 @@ class CollectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('description')
+            ->add('name', null, [
+                'label' => false,
+            ])
+            ->add('description', null, [
+                'label' => false,
+            ])
             ->add('category', EntityType::class, [
                 'class' => CollectionCategory::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'label' => false,
             ])
             ->add('imagePath', FileType::class, [
-                'label' => 'Image (JPEG/PNG file)',
+                'label' => false,
                 'mapped' => false,
                 'required' => false
             ])

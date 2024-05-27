@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="text">
                                     <h2>{{ collection.name }}</h2>
-                                    <span> {{ collection.user.email }} &nbsp;-&nbsp; {{ collection.createdAt ? collection.createdAt.format('F j, Y') : '' }}</span>
+                                    <span> {{ collection.user.name }} &nbsp;-&nbsp; {{ collection.createdAt ? collection.createdAt.format('F j, Y') : '' }}</span>
                                 </div>
                             </a>
                         </div>
@@ -42,43 +42,43 @@
         <section class="section-foot">
             <div class="container">
                 <div class="row blog-entries element-animate">
-                    <div class="col-md-12 col-lg-8 main-content">
+                    <div class="col-md-14 col-lg-12 col-xl-10 col-xxl-8 main-content">
                         <div class="row mb-4">
-                            <div class="col-sm-6" style="width: 100%">
+                            <div class="col-12">
                                 <h2 class="posts-entry-title">{{ 'lastAddItems'|trans }}</h2>
                             </div>
                         </div>
-
                         <div class="row">
                             {% for item in items %}
-                                <div class="col-lg-4 mb-4">
-                                    <div class="post-entry-alt" style="height: 17em; position: relative;">
-                                        <div class="excerpt">
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="post-entry-alt card">
+                                        <div class="card-body">
                                             <div class="footer-block-excerpt">
-                                                <h2>
+                                                <h2 class="card-title">
                                                     <a href="{{ path('app_item', {'id': item.id}) }}">{{ item.name }}</a>
                                                 </h2>
-                                                <a href="#"><i class="fa fa-heart"></i></a>
+                                                <a href="#" class="heart-icon"><i class="fa fa-heart"></i></a>
                                             </div>
-
-                                            <h4></h4>
-                                            <p>{{ 'collection'|trans }}: {{ item.itemCollection.name }}</p>
-                                            {% if item.tags is not empty %}
-                                                <p>{{ 'tags'|trans }}:
-                                                    {% for tag in item.tags %}
-                                                        {{ tag.name }}{% if not loop.last %}, {% endif %}
-                                                    {% endfor %}
-                                                </p>
-                                            {% endif %}
-
-                                            <div class="post-meta align-items-center text-left clearfix">
-                                                <figure class="author-figure mb-0 me-3 float-start"><img
-                                                        src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
-                                                        alt="Image" class="img-fluid"></figure>
-                                                <span class="d-inline-block mt-1">
-                                                    <a href="#">{{ item.itemCollection.user.email }}</a>
-                                                </span><br>
-                                                <span>{{ item.createdAt ? item.createdAt.format('F j, Y') : '' }}</span>
+                                            <div class="row mb-4">
+                                                <p class="card-text">{{ 'collection'|trans }}: {{ item.itemCollection.name }}</p>
+                                            </div>
+                                            <div class="post-meta">
+                                                <figure class="author-figure">
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="Image" class="img-fluid">
+                                                </figure>
+                                                <span>
+                                            <a href="#">{{ item.itemCollection.user.name }}</a><br>
+                                            {{ item.createdAt ? item.createdAt.format('F j, Y') : '' }}
+                                        </span>
+                                            </div>
+                                            <div>
+                                                {% if item.tags is not empty %}
+                                                    <p class="card-text">
+                                                        {% for tag in item.tags %}
+                                                            <span class="badge bg-secondary">{{ tag.name }}</span>
+                                                        {% endfor %}
+                                                    </p>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>

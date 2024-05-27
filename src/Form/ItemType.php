@@ -14,57 +14,61 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AllowDynamicProperties]
 final class ItemType extends AbstractType
 {
-    private CustomAttributesDataMapper $customAttributesDataMapper;
+    public function __construct(private readonly TagTransformer             $tagTransformer,
+                                private readonly CustomAttributesDataMapper $customAttributesDataMapper,
+                                private readonly TranslatorInterface        $translator,
 
-    public function __construct(TagTransformer $tagTransformer, CustomAttributesDataMapper $customAttributesDataMapper)
+    )
     {
-        $this->tagTransformer = $tagTransformer;
-        $this->customAttributesDataMapper = $customAttributesDataMapper;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, [
-            'label' => 'Name',
+            'label' => $this->translator->trans('name'),
             'required' => true
         ]);
 
         foreach ($options['customAttributes'] as $attributeType) {
             $attributeName = $attributeType->getName();
+
+            $modifiedName = str_replace("_", " ", $attributeName);
+
             $attributeTypeValue = $attributeType->getType()->value;
 
             switch ($attributeTypeValue) {
                 case 'INTEGER':
                     $builder->add($attributeName, IntegerType::class, [
-                        'label' => $attributeName,
+                        'label' => $modifiedName,
                         'required' => false
                     ]);
                     break;
                 case 'TEXT':
                     $builder->add($attributeName, TextareaType::class, [
-                        'label' => $attributeName,
+                        'label' => $modifiedName,
                         'required' => false
                     ]);
                     break;
                 case 'BOOL':
                     $builder->add($attributeName, CheckboxType::class, [
-                        'label' => $attributeName,
+                        'label' => $modifiedName,
                         'required' => false
                     ]);
                     break;
                 case 'DATE':
                     $builder->add($attributeName, DateType::class, [
-                        'label' => $attributeName,
+                        'label' => $modifiedName,
                         'required' => false
                     ]);
                     break;
                 default:
                     $builder->add($attributeName, TextType::class, [
-                        'label' => $attributeName,
+                        'label' => $modifiedName,
                         'required' => false
                     ]);
                     break;
@@ -72,6 +76,7 @@ final class ItemType extends AbstractType
         }
 
         $builder->add('tags', TextType::class, [
+            'label' => $this->translator->trans('tags'),
             'required' => false,
             'autocomplete' => true,
             'tom_select_options' => [

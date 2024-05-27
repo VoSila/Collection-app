@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\ItemCollection;
 use App\Form\CollectionType;
-use App\Repository\ItemCollectionRepository;
 use App\Service\CollectionService;
 use App\Service\ItemService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/collections')]
 class CollectionController extends AbstractController
@@ -20,7 +20,8 @@ class CollectionController extends AbstractController
     public function __construct(
         private readonly CollectionService      $collectionService,
         private readonly ItemService            $itemService,
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TranslatorInterface    $translator,
     )
     {
     }
@@ -28,11 +29,16 @@ class CollectionController extends AbstractController
     #[Route('/', name: 'app_collection')]
     public function index(Request $request): Response
     {
+        $userId = $this->collectionService->checkUser();
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $category = $request->get('category');
         $sortField = $request->query->get('sort', 'id');
         $sortDirection = $request->query->get('direction', 'DESC');
 
-        $criteria = $this->collectionService->getCriteriaBySorting($category);
+        $criteria = $this->collectionService->getCriteriaBySorting($category, $userId);
         $collections = $this->collectionService->getCollectionsForMain($criteria, $sortField, $sortDirection);
         $pagination = $this->collectionService->getPagination($collections, $request->query->getInt('page', 1));
 
@@ -47,7 +53,6 @@ class CollectionController extends AbstractController
     #[IsGranted('view', 'collection', 'Collection not found', 404)]
     public function show(Request $request, ItemCollection $collection, $id): Response
     {
-//        dd($request->query);
         $sortField = $request->query->get('sort', 'id');
         $sortDirection = $request->query->get('direction', 'DESC');
 
@@ -78,7 +83,7 @@ class CollectionController extends AbstractController
         }
 
         return $this->render('collection/form.html.twig', [
-            'action' => 'Edit',
+            'action' => $this->translator->trans('edit'),
             'form' => $result['form']->createView(),
             'collection' => $collection
         ]);
@@ -96,7 +101,7 @@ class CollectionController extends AbstractController
         }
 
         return $this->render('collection/form.html.twig', [
-            'action' => 'Create',
+            'action' => $this->translator->trans('create'),
             'form' => $result['form']->createView()
         ]);
     }

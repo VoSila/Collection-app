@@ -27,7 +27,6 @@ readonly class TagTransformer implements DataTransformerInterface
         foreach ($value as $tag) {
             $tags[] = $tag->getName();
         }
-
         return implode(',', $tags);
     }
 

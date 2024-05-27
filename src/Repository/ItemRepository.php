@@ -33,7 +33,7 @@ class ItemRepository extends ServiceEntityRepository
             ->select('IDENTITY(i.itemCollection) as itemCollectionId, COUNT(i.id) as itemCount')
             ->groupBy('i.itemCollection')
             ->orderBy('itemCount', 'DESC')
-            ->setMaxResults(5)
+            ->setMaxResults(6)
             ->getQuery()
             ->getResult();
     }

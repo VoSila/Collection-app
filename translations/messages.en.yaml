@@ -18,14 +18,24 @@ search: 'Search'
 
 #collections
 name: 'Name'
+collectionCreate: 'collection'
 nameRegister: 'Name'
 dateCreated: 'Data created'
 createNewCollection: 'Create new collection'
 createNewItem: 'Create new item'
+customAttributes: 'Custom Attributes'
+description: 'Description'
+image: 'Image'
+type: 'Type'
 delete: 'Delete'
 show: 'Show'
 edit: 'Edit'
+create: 'Create'
+addAttribute: 'Add attribute'
+deleteAttribute: 'Delete attribute'
 author: 'Author'
+item: 'item'
+
 
 #loginForm
 login: 'Log in'

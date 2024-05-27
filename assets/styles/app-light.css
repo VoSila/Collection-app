@@ -52,6 +52,28 @@ html {
 
 }
 
+#custom-attributes-wrapper .form-control{
+    margin-top: 10px;
+    background: #fbfbfb ;
+    border-color: #cacaca;
+    color: #000000;
+}
+
+#custom-attributes-wrapper .form-control input{
+    background: #ffffff;
+    border-color: #bcbcbc;
+    color: #000000;
+}
+
+#custom-attributes-wrapper .form-control .btn{
+    background: #f12121;
+    color: white;
+}
+
+#custom-attributes-wrapper .form-control .btn:hover{
+    background: #df5151;
+}
+
 .btn.btn-primary {
     color: #fff;
     background-color: #214252;
@@ -653,7 +675,6 @@ html {
 
 .post-meta {
     align-items: center;
-    position: absolute;
     bottom: 0;
     width: 100%;
     margin-bottom: 2em;
@@ -1465,4 +1486,70 @@ color: black}
 
 .error-page a:hover {
     background-color: #324e68;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    background: linear-gradient(145deg, #f3f3f3, #e3e3e3);
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.footer-block-excerpt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.footer-block-excerpt .card-title {
+    font-size: 1.2em;
+    margin-bottom: 0;
+}
+
+.footer-block-excerpt .heart-icon {
+    font-size: 1.5em;
+    color: #ff5a5f;
+}
+
+.card-text {
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.badge {
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+.post-meta {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.author-figure {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.author-figure img {
+    width: 100%;
+    height: auto;
+}
+
+.tags a {
+    margin-right: 5px;
+    margin-bottom: 5px;
 }

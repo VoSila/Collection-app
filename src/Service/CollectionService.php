@@ -31,6 +31,9 @@ readonly class CollectionService
     {
         $collection = new ItemCollection();
         $form = $this->createForm($formType, $collection);
+
+        $this->sanitizeRequestData($request);
+
         $this->handleForm($form, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,6 +55,7 @@ readonly class CollectionService
     public function editCollection(Request $request, string $formType, ItemCollection $collection): array
     {
         $form = $this->createForm($formType, $collection);
+        $this->sanitizeRequestData($request);
         $this->handleForm($form, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,6 +72,21 @@ readonly class CollectionService
             'success' => false,
             'form' => $form
         ];
+    }
+
+    private function sanitizeRequestData(Request $request): void
+    {
+        $data = $request->get('collection');
+
+        if (isset($data['customItemAttributes']) && is_array($data['customItemAttributes'])) {
+            foreach ($data['customItemAttributes'] as &$attribute) {
+                if (isset($attribute['name'])) {
+                    $attribute['name'] = str_replace(' ', '_', $attribute['name']);
+                }
+            }
+        }
+
+        $request->request->set('collection', $data);
     }
 
     public function getImage(mixed $form, ItemCollection $collection): void
@@ -121,9 +140,22 @@ readonly class CollectionService
         );
     }
 
-    public function getCriteriaBySorting(?string $category): array|null
+    public function checkUser()
     {
-        $criteria = [];
+        $user = $this->security->getUser();
+
+        if (!$user) {
+            return false;
+        }else{
+           return $user->getId();
+        }
+
+    }
+
+    public function getCriteriaBySorting(?string $category, int $userId): array
+    {
+        $criteria = ['user' => $userId];
+
         if ($category !== null) {
             $criteria['category'] = $category;
         }

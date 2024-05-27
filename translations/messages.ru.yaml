@@ -18,14 +18,24 @@ search: 'Поиск'
 
 #collections
 name: 'Название'
+collectionCreate: 'коллекцию'
 nameRegister: 'Имя'
 dateCreated: 'Дата создания'
 createNewCollection: 'Создать новую коллекцию'
 createNewItem: 'Создать новый предмет'
+customAttributes: 'Кастомные атрибуты'
+description: 'Описание'
+image: 'Картинка'
+type: 'Тип'
 delete: 'Удалить'
 show: 'Показать'
 edit: 'Редактировать'
+create: 'Создать'
+addAttribute: 'Добавить атрибут'
+deleteAttribute: 'Delete attribute'
 author: 'Автор'
+item: 'предмет'
+
 
 #loginForm
 login: 'Авторирация'

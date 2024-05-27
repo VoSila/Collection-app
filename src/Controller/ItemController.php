@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/items')]
 class ItemController extends AbstractController
@@ -18,6 +19,7 @@ class ItemController extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface   $entityManager,
         private readonly ItemService              $itemService,
+        private readonly TranslatorInterface    $translator,
     )
     {
     }
@@ -42,7 +44,7 @@ class ItemController extends AbstractController
         }
 
         return $this->render('item/form.html.twig', [
-            'action' => 'Create',
+            'action' => $this->translator->trans('create'),
             'form' => $result['form']->createView()
         ]);
 
@@ -63,7 +65,7 @@ class ItemController extends AbstractController
         }
 
         return $this->render('item/form.html.twig', [
-            'action' => 'Edit',
+            'action' => $this->translator->trans('edit'),
             'form' => $result['form']->createView(),
         ]);
     }

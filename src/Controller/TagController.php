@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Attribute\Route;
     {
         $searchTerm = $request->query->get('query');
         $tags = $this->tagService->getTags($searchTerm);
-
         return new JsonResponse($tags);
     }
 }
