@@ -21,10 +21,10 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
     
-    App\Service\YandexDiskService:
-        class: App\Service\YandexDiskService
+    App\Service\DropboxService:
+        class: App\Service\DropboxService
         arguments:
-            - '%env(YANDEX_DISK_TOKEN)%'
+            - '%env(DROPBOX_TOKEN)%'
  
     app.menu_builder:
         class: App\Menu\MenuBuilder

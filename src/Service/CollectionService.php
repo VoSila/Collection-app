@@ -17,12 +17,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 readonly class CollectionService
 {
     public function __construct(
+        private DropboxService         $dropboxService,
         private EntityManagerInterface $entityManager,
         private FormFactoryInterface   $formFactory,
         private PaginatorInterface     $paginator,
         private Security               $security,
         private SluggerInterface       $slugger,
-        private YandexDiskService      $yandexDiskService,
     )
     {
     }
@@ -76,7 +76,7 @@ readonly class CollectionService
 
         if ($imageFile) {
             $imageFileName = $this->getUniqFileName($imageFile);
-            $filePath = $this->yandexDiskService->uploadFile($imageFile, $imageFileName);
+            $filePath = $this->dropboxService->uploadFile($imageFile, $imageFileName);
 
             $collection->setImagePath($filePath);
         }
