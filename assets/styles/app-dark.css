@@ -1152,3 +1152,11 @@ color: white}
     margin-right: 5px;
     margin-bottom: 5px;
 }
+
+.alert-success{
+    background: #6ec16e;
+    font-size: 1.5em;
+    padding: 20px;
+    color: #474646;
+    text-align: center;
+}

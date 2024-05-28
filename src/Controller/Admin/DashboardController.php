@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\CollectionCategory;
+use App\Entity\Item;
 use App\Entity\ItemCollection;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -16,7 +17,7 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-         return $this->render('admin/dashboard.html.twig');
+        return $this->render('admin/dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -27,12 +28,14 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-         yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
+        yield MenuItem::linkToRoute('Home', 'fa fa-sign-out', 'app_main');
 
-         yield MenuItem::section('Collections');
-         yield MenuItem::linkToCrud('Categories', 'fas fa-medium', CollectionCategory::class);
+        yield MenuItem::section('Collections');
+        yield MenuItem::linkToCrud('Categories', 'fa-brands fa-readme', CollectionCategory::class);
         yield MenuItem::linkToCrud('Collections', 'fas fa-list', ItemCollection::class);
+        yield MenuItem::linkToCrud('Items', 'fa-solid fa-vr-cardboard', Item::class);
+
 
     }
 }

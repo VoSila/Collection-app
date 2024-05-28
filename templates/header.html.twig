@@ -14,6 +14,11 @@
                         {% else %}
                             <li><a href="{{ path('app_login') }}">{{ 'signIn'|trans }}</a></li>
                         {% endif %}
+                        {% if app.user %}
+                            {% if "ROLE_ADMIN" in app.user.roles %}
+                                <li><a href="{{ path('admin') }}">{{ 'admin'|trans }}</a></li>
+                            {% endif %}
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="d-flex align-items-center">
@@ -25,12 +30,15 @@
                         <span class="lang-label">RU</span>
                     </div>
                     <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-lightbulb"></i>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="{{ path('app_switch_theme', {'theme': 'app-dark'}) }}">Dark Theme</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_switch_theme', {'theme': 'app-light'}) }}">Light Theme</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_switch_theme', {'theme': 'app-dark'}) }}">Dark
+                                    Theme</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_switch_theme', {'theme': 'app-light'}) }}">Light
+                                    Theme</a></li>
                         </ul>
                     </div>
                 </div>

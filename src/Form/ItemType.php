@@ -45,31 +45,31 @@ final class ItemType extends AbstractType
                 case 'INTEGER':
                     $builder->add($attributeName, IntegerType::class, [
                         'label' => $modifiedName,
-                        'required' => false
+                        'required' => true,
                     ]);
                     break;
                 case 'TEXT':
                     $builder->add($attributeName, TextareaType::class, [
                         'label' => $modifiedName,
-                        'required' => false
+                        'required' => true,
                     ]);
                     break;
                 case 'BOOL':
                     $builder->add($attributeName, CheckboxType::class, [
                         'label' => $modifiedName,
-                        'required' => false
+                        'required' => true,
                     ]);
                     break;
                 case 'DATE':
                     $builder->add($attributeName, DateType::class, [
                         'label' => $modifiedName,
-                        'required' => false
+                        'required' => true,
                     ]);
                     break;
                 default:
                     $builder->add($attributeName, TextType::class, [
                         'label' => $modifiedName,
-                        'required' => false
+                        'required' => true,
                     ]);
                     break;
             }
@@ -77,7 +77,7 @@ final class ItemType extends AbstractType
 
         $builder->add('tags', TextType::class, [
             'label' => $this->translator->trans('tags'),
-            'required' => false,
+            'required' => true,
             'autocomplete' => true,
             'tom_select_options' => [
                 'create' => true,
@@ -86,7 +86,6 @@ final class ItemType extends AbstractType
             ],
             'autocomplete_url' => '/autocomplete/tags',
         ]);
-
         $builder->get('tags')
             ->addModelTransformer($this->tagTransformer);
 

@@ -15,6 +15,7 @@ signIn: 'Войти'
 signOut: 'Выйти'
 signUp: 'Регистрация'
 search: 'Поиск'
+admin: 'Админка'
 
 #collections
 name: 'Название'

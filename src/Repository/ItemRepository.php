@@ -41,14 +41,9 @@ class ItemRepository extends ServiceEntityRepository
     public function findLastFiveWithEagerLoading()
     {
         return $this->createQueryBuilder('i')
-            ->leftJoin('i.tags', 't')
-            ->addSelect('t')
-            ->leftJoin('i.itemCollection', 'ic')
-            ->addSelect('ic')
             ->orderBy('i.createdAt', 'DESC')
             ->setMaxResults(6)
             ->getQuery()
             ->getResult();
     }
-
 }

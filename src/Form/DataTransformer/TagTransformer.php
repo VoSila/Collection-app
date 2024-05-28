@@ -22,7 +22,6 @@ readonly class TagTransformer implements DataTransformerInterface
         if (null === $value) {
             return '';
         }
-
         $tags = [];
         foreach ($value as $tag) {
             $tags[] = $tag->getName();
@@ -43,7 +42,12 @@ readonly class TagTransformer implements DataTransformerInterface
         $value = new ArrayCollection();
 
         foreach ($items as $item) {
-            $tag = $this->tagRepository->findOneBy(['name' => $item]);
+            if (!is_numeric($item)) {
+                $tag = $this->tagRepository->findOneBy(['name' => $item]);
+            } else {
+                $tag = $this->tagRepository->findOneBy(['id' => (int) $item]);
+            }
+
             if (!$tag) {
                 $tag = (new Tag())->setName($item);
                 $this->entityManager->persist($tag);
@@ -51,6 +55,8 @@ readonly class TagTransformer implements DataTransformerInterface
 
             $value->add($tag);
         }
+
+        $this->entityManager->flush();
 
         return $value;
     }
