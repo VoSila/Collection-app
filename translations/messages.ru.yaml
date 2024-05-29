@@ -37,6 +37,11 @@ deleteAttribute: 'Delete attribute'
 author: 'Автор'
 item: 'предмет'
 
+#success messages
+collectionSuccessfullyCreated: "Коллекция успешно создана"
+collectionSuccessfullyEdited: "Коллекция успешно отредактирована"
+itemSuccessfullyCreated: "Предмет успешно создан"
+itemSuccessfullyEdited: "Предмет успешно отредактирован"
 
 #loginForm
 login: 'Авторирация'

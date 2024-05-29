@@ -17,6 +17,11 @@ signUp: 'Sign up'
 search: 'Search'
 admin: 'Admin'
 
+#success messages
+collectionSuccessfullyCreated: "Collection successfully created"
+collectionSuccessfullyEdited: "Collection successfully edited"
+itemSuccessfullyCreated: "Item successfully created"
+itemSuccessfullyEdited: "Item successfully edited"
 
 #collections
 name: 'Name'

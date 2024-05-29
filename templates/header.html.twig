@@ -54,7 +54,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const savedLocale = localStorage.getItem('locale');
+        const savedLocale = localStorage.getItem('locale') || 'en';
         const languageSwitch = document.getElementById('languageSwitch');
 
         languageSwitch.checked = savedLocale === 'ru';

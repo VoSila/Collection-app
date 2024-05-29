@@ -38,9 +38,9 @@ class ItemController extends AbstractController
         $result = $this->itemService->createItem($request, ItemType::class, $id);
 
         if ($result['success']) {
-            $this->addFlash('success', 'Item successfully created');
+            $this->addFlash('success', $this->translator->trans('itemSuccessfullyCreated'));
 
-            return $this->redirectToRoute('app_item', ['id' => $result['item']->getId()]);
+            return $this->redirectToRoute('app_collection_show', ['id' => $result['item']->getItemCollection()->getId()]);
         }
 
         return $this->render('item/form.html.twig', [
@@ -57,7 +57,7 @@ class ItemController extends AbstractController
         $result = $this->itemService->editItem($request, ItemType::class, $id);
 
         if ($result['success']) {
-            $this->addFlash('success', 'Collection successfully created');
+            $this->addFlash('success', $this->translator->trans('itemSuccessfullyEdited'));
 
             return $this->redirectToRoute('app_collection_show', [
                 'id' => $result['item']->getItemCollection()->getId()

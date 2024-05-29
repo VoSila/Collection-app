@@ -77,7 +77,7 @@ class CollectionController extends AbstractController
         $result = $this->collectionService->editCollection($request, CollectionType::class, $collection);
 
         if ($result['success']) {
-            $this->addFlash('success', 'Collection successfully created');
+            $this->addFlash('success', $this->translator->trans('collectionSuccessfullyEdited'));
 
             return $this->redirectToRoute('app_collection');
         }
@@ -95,9 +95,9 @@ class CollectionController extends AbstractController
         $result = $this->collectionService->createCollection($request, CollectionType::class);
 
         if ($result['success']) {
-            $this->addFlash('success', 'Collection successfully created');
+            $this->addFlash('success', $this->translator->trans('collectionSuccessfullyCreated'));
 
-            return $this->redirectToRoute('app_collection_show', ['id' => $result['collection']->getId()]);
+            return $this->redirectToRoute('app_collection');
         }
 
         return $this->render('collection/form.html.twig', [
