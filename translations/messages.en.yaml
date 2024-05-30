@@ -42,6 +42,7 @@ addAttribute: 'Add attribute'
 deleteAttribute: 'Delete attribute'
 author: 'Author'
 item: 'item'
+noRecordsFound: 'no records found'
 
 
 #loginForm

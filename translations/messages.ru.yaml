@@ -36,6 +36,7 @@ addAttribute: 'Добавить атрибут'
 deleteAttribute: 'Delete attribute'
 author: 'Автор'
 item: 'предмет'
+noRecordsFound: 'Записей не найдено'
 
 #success messages
 collectionSuccessfullyCreated: "Коллекция успешно создана"
