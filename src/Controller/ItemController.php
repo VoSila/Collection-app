@@ -6,7 +6,6 @@ use App\Entity\Item;
 use App\Form\ItemType;
 use App\Service\ItemService;
 use Doctrine\ORM\EntityManagerInterface;
-use JetBrains\PhpStorm\NoReturn;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +46,6 @@ class ItemController extends AbstractController
             'action' => $this->translator->trans('create'),
             'form' => $result['form']->createView()
         ]);
-
     }
 
     #[Route('/{id}/edit', name: 'app_item_edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
@@ -70,7 +68,6 @@ class ItemController extends AbstractController
         ]);
     }
 
-    #[NoReturn]
     #[Route('/{id}/delete', name: 'app_item_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, Item $item): Response
     {

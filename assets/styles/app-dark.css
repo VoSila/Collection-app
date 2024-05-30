@@ -568,6 +568,10 @@ color: white}
 .table td a {
     color: #e6e6e6}
 
+.table td a:hover {
+    color: #aeabab
+}
+
 .table td li a {
     color: black}
 

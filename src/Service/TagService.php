@@ -4,9 +4,10 @@ namespace App\Service;
 
 use App\Repository\TagRepository;
 
-class TagService
+readonly class TagService
 {
-    public function __construct(private TagRepository $tagRepository
+    public function __construct(
+        private TagRepository $tagRepository
     )
     {
     }

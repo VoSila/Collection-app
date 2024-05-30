@@ -21,5 +21,4 @@ class LocaleController extends AbstractController
         $referer = $request->headers->get('referer');
         return new RedirectResponse($referer ?: $this->generateUrl('homepage'));
     }
-
 }

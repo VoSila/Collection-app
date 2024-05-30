@@ -35,5 +35,3 @@ final readonly class MenuBuilder
         return $menu;
     }
 }
-
-

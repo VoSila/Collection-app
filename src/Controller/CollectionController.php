@@ -116,12 +116,4 @@ class CollectionController extends AbstractController
 
         return $this->redirectToRoute('app_collection', [], Response::HTTP_SEE_OTHER);
     }
-
-    #[Route('/custom_attr/{id}/delete', name: 'app_custom_attr_delete', methods: ['GET', 'POST'])]
-    public function deleteCustomAttr(Request $request, ItemCollection $itemCollection,): Response
-    {
-
-        dd($request);
-
-    }
 }

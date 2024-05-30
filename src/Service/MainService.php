@@ -18,12 +18,12 @@ readonly class MainService
 
     public function getItems()
     {
-        return $this->itemRepository->findLastFiveWithEagerLoading();
+        return $this->itemRepository->findLastSixWithEagerLoading();
     }
 
     public function getCollections(): array
     {
-        $topFiveCollections = $this->itemRepository->findTopFiveLargestItemCollectionIds();
+        $topFiveCollections = $this->itemRepository->findTopSixLargestItemCollectionIds();
 
         $collectionIds = array_column($topFiveCollections, 'itemCollectionId');
 

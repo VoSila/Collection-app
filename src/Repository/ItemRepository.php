@@ -27,7 +27,7 @@ class ItemRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findTopFiveLargestItemCollectionIds()
+    public function findTopSixLargestItemCollectionIds()
     {
         return $this->createQueryBuilder('i')
             ->select('IDENTITY(i.itemCollection) as itemCollectionId, COUNT(i.id) as itemCount')
@@ -38,7 +38,7 @@ class ItemRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findLastFiveWithEagerLoading()
+    public function findLastSixWithEagerLoading()
     {
         return $this->createQueryBuilder('i')
             ->orderBy('i.createdAt', 'DESC')

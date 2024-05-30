@@ -938,6 +938,10 @@ html {
 .table td a {
 color: black}
 
+.table td a:hover {
+    color: #4a4a4a
+}
+
 .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
