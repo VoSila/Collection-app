@@ -82,6 +82,9 @@ html {
 
 .btn.btn-primary:hover {
     border-color: #214252;
+    background: #18313e;
+    -webkit-transition: .3s all ease;
+    transform: translateY(-10%);
 }
 
 .btn.btn-primary:active {
@@ -1123,15 +1126,21 @@ color: black}
 }
 
 .form-container .social-links {
-    padding: 0;
     margin: 0 0 15px;
     list-style: none;
+    padding: 10px;
 }
 
 .form-container .social-links li {
     display: inline-block;
     margin: 0 3px;
 }
+
+.form-container .social-links a {
+    display: inline-block;
+    margin: 0 3px;
+}
+
 
 .form-container .social-links li a {
     color: #555;

@@ -45,7 +45,7 @@ itemSuccessfullyCreated: "Предмет успешно создан"
 itemSuccessfullyEdited: "Предмет успешно отредактирован"
 
 #loginForm
-login: 'Авторирация'
+login: 'Авторизация'
 registration: 'Регистрация'
 password: 'Пароль'
 rememberMe: 'Запомнить меня'

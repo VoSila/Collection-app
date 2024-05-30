@@ -19,6 +19,7 @@
         "knplabs/knp-paginator-bundle": "*",
         "knpuniversity/oauth2-client-bundle": "^2.18",
         "league/flysystem": "^3.28",
+        "league/oauth2-github": "^3.1",
         "league/oauth2-google": "^4.0",
         "php-http/message-factory": "^1.1",
         "phpdocumentor/reflection-docblock": "^5.4",

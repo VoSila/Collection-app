@@ -103,7 +103,9 @@
                                            data-collection-id="{{ collection.id }}">
                                 </td>
                                 <td>{{ collection.id }}</td>
-                                <td><a href="{{ path('app_collection_show', {'id': collection.id}) }}">{{ collection.name }}</a></td>
+                                <td>
+                                    <a href="{{ path('app_collection_show', {'id': collection.id}) }}">{{ collection.name }}</a>
+                                </td>
                                 <td>{{ collection.category.name }}</td>
                                 <td>{{ collection.user.email }}</td>
                                 <td>{{ collection.createdAt ? collection.createdAt.format('Y-m-d H:i:s') : '' }}</td>
@@ -173,16 +175,9 @@
                     }
                 });
 
-                if (selectedCollectionIds.length === 0) {
-                    alert('Please select at least one collection to delete.');
-                    return;
-                }
-
-                if (confirm('Are you sure you want to delete selected collections?')) {
-                    forms.forEach(function (form) {
-                        form.submit();
-                    });
-                }
+                forms.forEach(function (form) {
+                    form.submit();
+                });
             });
         });
     </script>
