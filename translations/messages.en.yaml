@@ -51,6 +51,10 @@ registration: 'Registration'
 password: 'Password'
 rememberMe: 'Remember me'
 agreeTerms: 'Agree terms'
+age: 'Age'
+validationMessageAge: 'Age should be at least {{ limit }} years.'
+validationMessagePassword: 'Your password should be at least {{ limit }} characters.'
+
 
 All: 'All'
 Animals: 'Animals'

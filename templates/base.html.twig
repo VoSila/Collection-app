@@ -2,9 +2,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="google-site-verification" content="qhoRin2kzjOgtV3H6DXbaKPuLV6fdmM_Dl0Ni7hfTh4" />
+    <meta name="google-site-verification" content="qhoRin2kzjOgtV3H6DXbaKPuLV6fdmM_Dl0Ni7hfTh4"/>
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
     {% set theme = app.session.get('theme', 'app-light') %}
@@ -35,6 +36,45 @@
 
         {% block body %}
         {% endblock %}
+
+        {% if app.user %}
+            <button id="supportButton" class="btn btn-primary">Помощь</button>
+        {% endif %}
+
+
+        <div id="supportForm" class="hidden">
+            <h2>Создать заявку</h2>
+            <form action="{{ path('create_ticket') }}" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea class="form-control" id="description" name="description" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="priority" class="form-label">Priority:</label>
+                    <select class="form-select" id="priority" name="priority" required>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                {% if collection is defined and collection is not empty %}
+                    <input type="hidden" class="form-control" id="collection" name="collection" value="{{ collection }}">
+                {% endif %}
+                <button type="submit" class="btn btn-primary">Create Ticket</button>
+            </form>
+            </form>
+        </div>
+
+        <script>
+            document.getElementById("supportButton").addEventListener("click", function () {
+                document.getElementById("supportForm").classList.toggle("visible");
+            });
+        </script>
+
     </main>
     <footer class="site-footer">
         {% include 'footer.html.twig' %}

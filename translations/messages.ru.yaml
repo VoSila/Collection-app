@@ -50,6 +50,11 @@ registration: 'Регистрация'
 password: 'Пароль'
 rememberMe: 'Запомнить меня'
 agreeTerms: 'Согласен с условиями'
+age: 'Возраст'
+validationMessageAge: 'Возраст должен быть не менее {{ limit }} лет.'
+validationMessagePassword: 'Ваш пароль должен содержать не менее {{ limit }} символов.'
+
+
 
 All: 'Все'
 Animals: 'Животные'

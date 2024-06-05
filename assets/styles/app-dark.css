@@ -1179,3 +1179,42 @@ color: white}
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+#supportButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#supportForm {
+    position: fixed;
+    bottom: 80px;
+    right: 60px;
+    max-width: 300px;
+    background-color: #757575;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 9999; /* Установите z-index больше, чем у других элементов на странице */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#supportForm select option {
+    cursor: pointer; /* Устанавливаем курсор как указатель */
+}
+
+#supportForm select option:hover {
+    background-color: #f8f9fa; /* Изменяем цвет фона при наведении */
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}

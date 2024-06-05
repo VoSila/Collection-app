@@ -24,6 +24,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
+    #[ORM\Column(length: 180)]
+    private ?int $age = null;
+
+    #[ORM\Column(length: 180, nullable: true)]
+    private ?string $jiraAccountId = null;
+
     /**
      * @var list<string> The user roles
      */
@@ -76,6 +82,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
 
         return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(?int $age): void
+    {
+        $this->age = $age;
+    }
+
+    public function getJiraAccountId(): ?string
+    {
+        return $this->jiraAccountId;
+    }
+
+    public function setJiraAccountId(?string $jiraAccountId): void
+    {
+        $this->jiraAccountId = $jiraAccountId;
     }
 
     /**
