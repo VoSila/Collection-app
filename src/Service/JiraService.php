@@ -3,29 +3,48 @@
 namespace App\Service;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use JiraRestApi\Issue\IssueService;
 use JiraRestApi\Issue\IssueField;
-
+use JiraRestApi\Issue\IssueService;
+use JiraRestApi\JiraException;
 use JiraRestApi\User\UserService;
+use JsonMapper_Exception;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class JiraService
 {
     private UserService $userService;
     private IssueField $issueField;
     private IssueService $issueService;
-    public function __construct(private EntityManagerInterface $entityManager)
+    private string $jiraBaseUrl;
+    private string $projectKey;
+
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly Security               $security,
+        private readonly PaginatorInterface     $paginator,
+        string                                  $jiraBaseUrl,
+        string                                  $projectKey
+    )
     {
         $this->issueField = new IssueField();
         $this->userService = new UserService();
         $this->issueService = new IssueService();
+        $this->jiraBaseUrl = $jiraBaseUrl;
+        $this->projectKey = $projectKey;
     }
 
-    public function createTicket(User $user,string $name, string $description, string $priority, string $url, ?string $collection)
+    /**
+     * @throws JsonMapper_Exception
+     * @throws JiraException
+     */
+    public function createTicket($user, string $name, string $description, string $priority, string $url, ?string $collection)
     {
-//        $this->getBoard($user);
-        $this->createUser($user);
+        if (!$user->getJiraAccountId()) {
+            $this->createUser($user);
+        }
 
         $this->issueField->setProjectKey('TEST')
             ->setSummary($name)
@@ -37,13 +56,10 @@ class JiraService
             ->setIssueTypeAsString('Task')
             ->setReporterAccountId($user->getJiraAccountId());
 
-        $issue = $this->issueService->create($this->issueField);
-dd($issue);
-
-        return $issue;
+        return $this->issueService->create($this->issueField);
     }
 
-    public function createUser(User $user)
+    public function createUser(User $user): void
     {
         $userJira = $this->userService->create([
             'emailAddress' => $user->getEmail(),
@@ -56,14 +72,43 @@ dd($issue);
         $this->entityManager->flush();
     }
 
-    public function getBoard(User $user)
+    public function getTickets($user): array
     {
         $jql = 'reporter = "' . $user->getJiraAccountId() . '"';
         $issueService = new IssueService();
 
         $ret = $issueService->search($jql);
-        $issues = $ret->getIssues();
 
-        dd($issues);
+        return $ret->getIssues();
+    }
+
+
+    public function generateJiraLink(string $accountId): string
+    {
+        $jqlQuery = '"reporter" = \'' . $accountId . '\'';
+
+        $encodedJqlQuery = urlencode($jqlQuery);
+
+        return $this->jiraBaseUrl . "/jira/core/projects/" . $this->projectKey . "/board?filter=" . $encodedJqlQuery;
+    }
+
+    public function checkUser()
+    {
+        $user = $this->security->getUser();
+
+        if (!$user) {
+            return false;
+        } else {
+            return $user->getId();
+        }
+    }
+
+    public function getPagination(array $ticket, int $request): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $ticket,
+            $request,
+            5
+        );
     }
 }

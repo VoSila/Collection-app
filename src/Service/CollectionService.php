@@ -149,7 +149,6 @@ readonly class CollectionService
         }else{
            return $user->getId();
         }
-
     }
 
     public function getCriteriaBySorting(?string $category, int $userId): array

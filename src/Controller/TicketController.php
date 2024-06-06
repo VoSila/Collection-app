@@ -4,20 +4,44 @@ namespace App\Controller;
 
 use App\Service\JiraService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/ticket')]
 class TicketController extends AbstractController
 {
+
     public function __construct(
-        private readonly JiraService $jiraService
+        private readonly JiraService         $jiraService,
+        private readonly TranslatorInterface $translator,
     )
     {
     }
 
-    #[Route('/create-ticket', name: 'create_ticket')]
+    #[Route('/', name: 'app_ticket')]
+    public function index(Request $request): Response
+    {
+        $userId = $this->jiraService->checkUser();
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $user = $this->getUser();
+
+        $tickets = $this->jiraService->getTickets($user);
+        $pagination = $this->jiraService->getPagination($tickets, $request->query->getInt('page', 1));
+
+        $url = $this->jiraService->generateJiraLink($user->getJiraAccountId());
+        return $this->render('ticket/index.html.twig', [
+            'pagination' => $pagination,
+            'url' => $url
+        ]);
+    }
+
+    #[Route('/create', name: 'app_ticket_create')]
     public function createTicket(Request $request): Response
     {
         $user = $this->getUser();
@@ -28,10 +52,14 @@ class TicketController extends AbstractController
         $url = $request->server->get('HTTP_REFERER');
         $collection = $request->request->get('collection');
 
-        $issue = $this->jiraService->createTicket($user, $name, $description, $priority, $url, $collection);
-//dd($issue);
-        return $this->render('main/index.html.twig', [
-            'issue' => $issue
-        ]);
+        try {
+            $this->jiraService->createTicket($user, $name, $description, $priority, $url, $collection);
+            $this->addFlash('success', $this->translator->trans('successCreateTicket'));
+        } catch (\Exception $e) {
+            $this->addFlash('error', $this->translator->trans('errorCreateTicket'));
+        }
+
+        $referer = $request->headers->get('referer');
+        return new RedirectResponse($referer ?: $this->generateUrl('homepage'));
     }
 }

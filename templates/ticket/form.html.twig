@@ -1,0 +1,32 @@
+<div id="supportForm" class="hidden">
+    <h2>{{ 'createTicket'|trans }}</h2>
+    <form action="{{ path('app_ticket_create') }}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">{{ 'name'|trans }}:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">{{ 'description'|trans }}:</label>
+            <textarea class="form-control" id="description" name="description" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="priority" class="form-label">{{ 'priority'|trans }}:</label>
+            <select class="form-select" id="priority" name="priority" required>
+                <option value="High">{{ 'high'|trans }}</option>
+                <option value="Medium">{{ 'medium'|trans }}</option>
+                <option value="Low">{{ 'low'|trans }}</option>
+            </select>
+        </div>
+        {% if collection is defined and collection is not empty %}
+            <input type="hidden" class="form-control" id="collection" name="collection" value="{{ collection }}">
+        {% endif %}
+        <button type="submit" class="btn btn-primary">{{ 'createTicket'|trans }}</button>
+    </form>
+    </form>
+</div>
+
+<script>
+    document.getElementById("supportButton").addEventListener("click", function () {
+        document.getElementById("supportForm").classList.toggle("visible");
+    });
+</script>

@@ -54,7 +54,18 @@ age: 'Возраст'
 validationMessageAge: 'Возраст должен быть не менее {{ limit }} лет.'
 validationMessagePassword: 'Ваш пароль должен содержать не менее {{ limit }} символов.'
 
-
+#ticket
+help: 'Помощь'
+tickets: 'Заявки'
+priority: 'Приоритет'
+high: 'Высокий'
+medium: 'Средний'
+low: 'Низкий'
+createTicket: 'Создать заявку'
+status: 'Статус'
+viewTickets: 'Посмотреть заявки в Jira'
+successCreateTicket: 'Заявка успешно создана'
+errorCreateTicket: 'Возникла проблема при созданнии, повторите позже'
 
 All: 'Все'
 Animals: 'Животные'

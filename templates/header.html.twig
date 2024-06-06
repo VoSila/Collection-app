@@ -9,6 +9,7 @@
                     <ul class="js-clone-nav site-menu mx-auto">
                         <li><a href="{{ path('app_main') }}">{{ 'home'|trans }}</a></li>
                         <li><a href="{{ path('app_collection') }}">{{ 'collections'|trans }}</a></li>
+                        <li><a href="{{ path('app_ticket') }}">{{ 'tickets'|trans }}</a></li>
                         {% if app.user %}
                             <li><a href="{{ path('app_logout') }}">{{ 'signOut'|trans }}</a></li>
                         {% else %}

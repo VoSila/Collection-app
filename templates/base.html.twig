@@ -33,48 +33,18 @@
         {% for message in app.flashes('success') %}
             <div class="alert-success">{{ message }}</div>
         {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert-error">{{ message }}</div>
+        {% endfor %}
 
         {% block body %}
         {% endblock %}
 
         {% if app.user %}
-            <button id="supportButton" class="btn btn-primary">Помощь</button>
+            <button id="supportButton" class="btn btn-primary">{{ 'help'|trans }}</button>
         {% endif %}
 
-
-        <div id="supportForm" class="hidden">
-            <h2>Создать заявку</h2>
-            <form action="{{ path('create_ticket') }}" method="post">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description:</label>
-                    <textarea class="form-control" id="description" name="description" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="priority" class="form-label">Priority:</label>
-                    <select class="form-select" id="priority" name="priority" required>
-                        <option value="High">High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
-                    </select>
-                </div>
-                {% if collection is defined and collection is not empty %}
-                    <input type="hidden" class="form-control" id="collection" name="collection" value="{{ collection }}">
-                {% endif %}
-                <button type="submit" class="btn btn-primary">Create Ticket</button>
-            </form>
-            </form>
-        </div>
-
-        <script>
-            document.getElementById("supportButton").addEventListener("click", function () {
-                document.getElementById("supportForm").classList.toggle("visible");
-            });
-        </script>
-
+        {% include 'ticket/form.html.twig' %}
     </main>
     <footer class="site-footer">
         {% include 'footer.html.twig' %}

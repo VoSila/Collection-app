@@ -55,6 +55,18 @@ age: 'Age'
 validationMessageAge: 'Age should be at least {{ limit }} years.'
 validationMessagePassword: 'Your password should be at least {{ limit }} characters.'
 
+#ticket
+help: 'Help'
+tickets: 'Tickets'
+priority: 'Priority'
+high: 'High'
+medium: 'Medium'
+low: 'Low'
+createTicket: 'Create ticket'
+status: 'Status'
+viewTickets: 'View tickets in Jira'
+successCreateTicket: 'Ticket successfully created'
+errorCreateTicket: 'There were problems creating it, please try again later'
 
 All: 'All'
 Animals: 'Animals'
