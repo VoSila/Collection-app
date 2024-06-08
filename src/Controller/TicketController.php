@@ -56,7 +56,7 @@ class TicketController extends AbstractController
             $this->jiraService->createTicket($user, $name, $description, $priority, $url, $collection);
             $this->addFlash('success', $this->translator->trans('successCreateTicket'));
         } catch (\Exception $e) {
-            $this->addFlash('error', $this->translator->trans('errorCreateTicket'));
+            $this->addFlash('error', $this->translator->trans('errorCreate'));
         }
 
         $referer = $request->headers->get('referer');

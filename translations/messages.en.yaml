@@ -16,6 +16,7 @@ signOut: 'Sign out'
 signUp: 'Sign up'
 search: 'Search'
 admin: 'Admin'
+generateApiToken: 'Generate API Token'
 
 #success messages
 collectionSuccessfullyCreated: "Collection successfully created"
@@ -66,7 +67,7 @@ createTicket: 'Create ticket'
 status: 'Status'
 viewTickets: 'View tickets in Jira'
 successCreateTicket: 'Ticket successfully created'
-errorCreateTicket: 'There were problems creating it, please try again later'
+errorCreate: 'There were problems creating it, please try again later'
 
 All: 'All'
 Animals: 'Animals'

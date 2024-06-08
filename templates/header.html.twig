@@ -11,6 +11,7 @@
                         <li><a href="{{ path('app_collection') }}">{{ 'collections'|trans }}</a></li>
                         <li><a href="{{ path('app_ticket') }}">{{ 'tickets'|trans }}</a></li>
                         {% if app.user %}
+                            <li><a href="{{ path('app_generate_api_token') }}">{{ 'generateApiToken'|trans }}</a></li>
                             <li><a href="{{ path('app_logout') }}">{{ 'signOut'|trans }}</a></li>
                         {% else %}
                             <li><a href="{{ path('app_login') }}">{{ 'signIn'|trans }}</a></li>

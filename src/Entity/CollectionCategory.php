@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CollectionCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CollectionCategoryRepository::class)]
 class CollectionCategory
@@ -11,9 +12,11 @@ class CollectionCategory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['collection:list', 'collection:create', 'collection:update'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['collection:list', 'collection:create', 'collection:update'])]
     private ?string $name = null;
 
     public function __toString(): string

@@ -16,6 +16,7 @@ signOut: 'Выйти'
 signUp: 'Регистрация'
 search: 'Поиск'
 admin: 'Админка'
+generateApiToken: 'Создать API Токен'
 
 #collections
 name: 'Название'
@@ -65,11 +66,12 @@ createTicket: 'Создать заявку'
 status: 'Статус'
 viewTickets: 'Посмотреть заявки в Jira'
 successCreateTicket: 'Заявка успешно создана'
-errorCreateTicket: 'Возникла проблема при созданнии, повторите позже'
+errorCreate: 'Возникла проблема при созданнии, повторите позже'
 
 All: 'Все'
 Animals: 'Животные'
 Cars: 'Машины'
 Games: 'Игры'
 Other: 'Другое'
+
 

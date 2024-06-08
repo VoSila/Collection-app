@@ -2,32 +2,50 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\ItemCollectionRepository;
 use App\Validator\CollectionCustomAttribute;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ItemCollectionRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    operations: [
+        new GetCollection(normalizationContext: ['groups' => ['collection:list']]),
+        new Post(denormalizationContext: ['groups' => ['collection:create']]),
+        new Patch(denormalizationContext: ['groups' => ['collection:update']]),
+        new Delete(denormalizationContext: ['groups' => ['collection:delete']]),
+    ],
+)]
 class ItemCollection
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['collection:list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['collection:list', 'collection:create', 'collection:update'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['collection:list', 'collection:create', 'collection:update'])]
     private ?string $description = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Valid()]
+    #[Groups(['collection:list', 'collection:create', 'collection:update'])]
     private ?CollectionCategory $category = null;
 
     #[ORM\Column(length: 1024, nullable: true)]
@@ -36,6 +54,7 @@ class ItemCollection
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Valid()]
+    #[Groups(['collection:list', 'collection:create', 'collection:update'])]
     private ?User $user = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

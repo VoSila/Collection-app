@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -18,10 +19,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['collection:list', 'collection:create', 'collection:update'])]
     private ?int $id = null;
     #[ORM\Column(length: 100)]
     private ?string $name = null;
     #[ORM\Column(length: 180)]
+    #[Groups(['collection:list', 'collection:create', 'collection:update'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 180)]
@@ -29,6 +32,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $jiraAccountId = null;
+
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $apiToken = null;
 
     /**
      * @var list<string> The user roles
@@ -102,6 +108,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setJiraAccountId(?string $jiraAccountId): void
     {
         $this->jiraAccountId = $jiraAccountId;
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(?string $apiToken): void
+    {
+        $this->apiToken = $apiToken;
     }
 
     /**
