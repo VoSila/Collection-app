@@ -28,7 +28,7 @@ services:
     App\Service\JiraService:
         class: App\Service\JiraService
         arguments:
-            $jiraBaseUrl: '%env(JIRAAPI_V3_HOST)%'
+            $jiraBaseUrl: '%env(JIRA_HOST)%'
             $projectKey: '%env(JIRA_PROJECT_KEY)%'
        
     app.menu_builder:

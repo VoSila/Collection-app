@@ -4,11 +4,10 @@ namespace App\Service;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use JiraCloud\ADF\AtlassianDocumentFormat;
-use JiraCloud\Issue\IssueField;
-use JiraCloud\Issue\IssueService;
-use JiraCloud\JiraException;
-use JiraCloud\User\UserService;
+use JiraRestApi\Issue\IssueField;
+use JiraRestApi\Issue\IssueService;
+use JiraRestApi\JiraException;
+use JiraRestApi\User\UserService;
 use JsonMapper_Exception;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -47,9 +46,9 @@ class JiraService
             $this->createUser($user);
         }
 
-        $this->issueField->setProjectKey($this->projectKey)
+        $this->issueField->setProjectKey('TEST')
             ->setSummary($name)
-//            ->setDescription($description)
+            ->setDescription($description)
             ->setPriorityNameAsString($priority)
             ->addCustomField('customfield_10041', $collection)
             ->addCustomField('customfield_10042', $url)
@@ -57,7 +56,6 @@ class JiraService
             ->setIssueTypeAsString('Task')
             ->setReporterAccountId($user->getJiraAccountId());
 
-        dd($this->issueService->create($this->issueField));
         return $this->issueService->create($this->issueField);
     }
 
@@ -83,7 +81,8 @@ class JiraService
         $jql = 'reporter = "' . $user->getJiraAccountId() . '"';
         $issueService = new IssueService();
 
-        $ret = $issueService->search($jql);
+        $ret = $issueService->search($jql)??"";
+
         return $ret->getIssues();
     }
 

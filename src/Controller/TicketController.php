@@ -52,12 +52,12 @@ class TicketController extends AbstractController
         $url = $request->server->get('HTTP_REFERER');
         $collection = $request->request->get('collection');
 
-//        try {
+        try {
             $this->jiraService->createTicket($user, $name, $description, $priority, $url, $collection);
             $this->addFlash('success', $this->translator->trans('successCreateTicket'));
-//        } catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', $this->translator->trans('errorCreate'));
-//        }
+        }
 
         $referer = $request->headers->get('referer');
         return new RedirectResponse($referer ?: $this->generateUrl('homepage'));
