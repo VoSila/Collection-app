@@ -598,9 +598,8 @@ color: white}
     border-color: #214252;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e"); }
 
-
-
 .table > :not(caption) > * > * {
+    color: #ffffff;
     padding: 0.5rem 0.5rem;
     background-color: var(--bs-table-bg);
     border-bottom-width: 1px;
@@ -1228,4 +1227,21 @@ color: white}
 
 .visible {
     display: block;
+}
+
+.pagination .page-link{
+    color: #142832;
+    background: #afaeae;
+    border-color: #7c7a7a;
+}
+
+.pagination .active > .page-link, .page-link.active {
+    background: #142832;
+    border-color: #142832;
+    color: white;
+}
+
+.pagination .page-link:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }

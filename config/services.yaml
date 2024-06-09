@@ -30,7 +30,7 @@ services:
         arguments:
             $jiraBaseUrl: '%env(JIRA_HOST)%'
             $projectKey: '%env(JIRA_PROJECT_KEY)%'
-       
+            
     app.menu_builder:
         class: App\Menu\MenuBuilder
         arguments: ["@knp_menu.factory"]
