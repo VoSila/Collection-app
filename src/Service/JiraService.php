@@ -46,7 +46,7 @@ class JiraService
             $this->createUser($user);
         }
 
-        $this->issueField->setProjectKey('TEST')
+        $this->issueField->setProjectKey($this->projectKey)
             ->setSummary($name)
             ->setDescription($description)
             ->setPriorityNameAsString($priority)
@@ -81,7 +81,7 @@ class JiraService
         $jql = 'reporter = "' . $user->getJiraAccountId() . '"';
         $issueService = new IssueService();
 
-        $ret = $issueService->search($jql)??"";
+        $ret = $issueService->search($jql);
 
         return $ret->getIssues();
     }
