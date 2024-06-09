@@ -72,6 +72,10 @@ class JiraService
         $this->entityManager->flush();
     }
 
+    /**
+     * @throws JsonMapper_Exception
+     * @throws JiraException
+     */
     public function getTickets($user): array
     {
         $jql = 'reporter = "' . $user->getJiraAccountId() . '"';
