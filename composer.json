@@ -22,7 +22,7 @@
         "league/flysystem": "^3.28",
         "league/oauth2-github": "^3.1",
         "league/oauth2-google": "^4.0",
-        "lesstif/php-jira-rest-client": "^5.8",
+        "lesstif/jira-cloud-restapi": "^1.6",
         "nelmio/cors-bundle": "^2.4",
         "php-http/message-factory": "^1.1",
         "phpdocumentor/reflection-docblock": "^5.4",
