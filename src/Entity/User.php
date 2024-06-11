@@ -30,8 +30,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?int $age = null;
 
-    #[ORM\Column(length: 180, nullable: true)]
-    private ?string $jiraAccountId = null;
+    #[ORM\Column(length: 180)]
+    private ?string $jiraAccountId = '';
 
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $apiToken = null;
